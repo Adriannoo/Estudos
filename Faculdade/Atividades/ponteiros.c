@@ -24,3 +24,4 @@ int main() { // Armazena um endereco de memória, de outra variável.
 
     return 0;
 }
+

@@ -17,13 +17,14 @@ int main(void){
 }
 */
 
-/*
 int main() {
+
     struct dados_pessoa {
         char nome[20];
         int idade;
         float altura;
     };
+
     struct dados_pessoa pessoa;
 
     printf("--------- Cadastro de pessoa ---------\n");
@@ -44,9 +45,9 @@ int main() {
 
     return 0;
 }
-*/
 
 
+/*
 int main() {
     const char *menuItems[] = {
         "Material de Limpeza",
@@ -61,6 +62,7 @@ int main() {
 
     do {
         printf("\n   <Menu Principal>\n");
+        printf("\n %d \n", numItems);
         for (int i = 0; i < numItems; i++) {
             printf("%d. %s\n", i + 1, menuItems[i]);
         }
@@ -91,3 +93,5 @@ int main() {
 
     return 0;
 }
+*/
+
