@@ -5,9 +5,8 @@
 int contaT = 0, contaP = 0, contaC = 0;
 
 void contaPeixeColuna(char matriz[MAX][MAX], int linha, int coluna) {
-    int i, j;     
-    for (i = 0; i < linha; i++) {
-        for (j = 0; j < coluna; j++) {
+    for (int i = 0; i < linha; i++) {
+        for (int j = 0; j < coluna; j++) {
             if (matriz[i][j] == 'T') {
                 contaT++;
             } else if (matriz[i][j] == 'P') {
