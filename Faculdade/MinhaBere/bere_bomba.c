@@ -40,7 +40,8 @@ struct CadastroCliente{
     char num[8];
     char bairro[30];
     char cep[8];
-    char telefone[30];};
+    char telefone[30];
+};
 
 struct Cadastrousuario{
     int cod;
@@ -57,7 +58,8 @@ struct CadastroProduto{
     float margem;
     float precoVenda;
     int estoque;
-    int estoqueminimo;};
+    int estoqueminimo;
+};
 
 struct Data {
     int dia;
@@ -73,7 +75,7 @@ struct Data obterDataAtual() {
     dataAtual.mes = tm.tm_mon + 1;
     dataAtual.ano = tm.tm_year + 1900;
     return dataAtual;
-}    
+}
 
 struct ProdutoVenda{
     int num;
@@ -81,7 +83,8 @@ struct ProdutoVenda{
     char descricao[30];
     int quantidade;
     float precoVenda;
-    float valorTotal};
+    float valorTotal;
+};
 
 struct CadastroVenda{
     int num;
@@ -90,7 +93,8 @@ struct CadastroVenda{
     struct Data data;
     float valorTotal;
     int totalProdutos;
-    struct ProdutoVenda *produtos};
+    struct ProdutoVenda *produtos;
+};
 //    int maxProdutos;};
 
 struct SituacaoCaixa{
@@ -98,7 +102,8 @@ struct SituacaoCaixa{
     float inicioCaixa;
     float totalDin;
     float totalCartao;
-    float vCaixa};
+    float vCaixa;
+};
 
 
 //função que impede letras onde pede-se números
@@ -130,11 +135,6 @@ bool validacaracter(char *caracter){
 
 float truncar(float valor, int casas_decimais) {
     float potencia = pow(10.0f, casas_decimais);
-//    printf("valor: %.6f\n", valor);
-//    printf("potencia: %.6f\n", potencia);
-//    printf("valor * potencia: %.6f\n", valor * potencia);
-//    printf("truncf(valor * potencia): %.6f\n", truncf(valor * potencia));
-//    printf("truncf(valor * potencia) / potencia: %.6f\n", truncf(valor * potencia) / potencia);
     return truncf(valor * potencia) / potencia;
 }
 
@@ -143,7 +143,7 @@ int pesquisaItem(int codigo){
     int resultado =-1;
     for (int i = 0; i < numProdutos; i++){
         if (produto[i].cod==codigo){
-          resultado = i; 
+          resultado = i;
         }
     }
     return resultado;
@@ -154,7 +154,7 @@ int pesquisaCliente(int codigo){
     int resultado =-1;
     for (int i = 0; i < numClientes; i++){
         if (cliente[i].cod==codigo){
-          resultado = i; 
+          resultado = i;
         }
     }
     return resultado;
@@ -496,19 +496,6 @@ void saida(){
                 if (salvar == 's' || salvar == 'S'){
                     printf("\nPasso 1...\n\n");
 
-//                    posicaoCaixa->caixa=caixa;
-//                    posicaoCaixa.inicioCaixa=inicioCaixa;
-//                    posicaoCaixa.totalCartao=totalCartao;
-//                    posicaoCaixa.totalDin=totalDin;
-//                    posicaoCaixa.vCaixa=vCaixa;
-//                    printf("\nPasso 2...\n\n");
-//                    arquivoCaixa = fopen("caixa.dat", "wb");
-//                    printf("\nPasso 3...\n\n");
-//                    fwrite(posicaoCaixa, sizeof(struct SituacaoCaixa), 1, arquivoCaixa);
-//                    printf("\nPasso 4...\n\n");
-//                    fclose(arquivoCaixa);
-//                    printf("\nPasso 5...\n\n");
-
                     arquivoCliente = fopen("clientes.dat", "wb");
                     fwrite(&numClientes, sizeof(int), 1, arquivoCliente);
                     fwrite(cliente, sizeof(struct CadastroCliente), numClientes, arquivoCliente);
@@ -521,9 +508,8 @@ void saida(){
 
                     arquivoVenda = fopen("vendas.dat", "wb");
                     fwrite(&numVendas, sizeof(int), 1, arquivoVenda);
-//                    fwrite(venda, sizeof(struct CadastroVenda), numVendas, arquivoVenda);
                     for (int i = 0; i < numVendas; i++) {
-                      fwrite(&venda[i], sizeof(struct CadastroVenda) - sizeof(struct ProdutoVenda *), 1, arquivoVenda); 
+                      fwrite(&venda[i], sizeof(struct CadastroVenda) - sizeof(struct ProdutoVenda *), 1, arquivoVenda);
                       fwrite(venda[i].produtos, sizeof(struct ProdutoVenda), venda[i].totalProdutos, arquivoVenda);
                     }
                     fclose(arquivoVenda);
@@ -548,14 +534,12 @@ void saida(){
             exit(0);
         }
 
-        //voltar para menu principal
         if (sair == 2){
             voltar();
             main();
             system("cls");
         }
 
-        //caso não seja nenhuma das opções (sair ou voltar pra menu)
         else{
             opinvalida();
             system("cls");
@@ -659,7 +643,7 @@ void cadastroCliente(){
             }
         }
         fflush(stdin);
-       
+
 //        printf("%s",produto[procuraItem(2)].descricao);
 
         //BAIRRO
@@ -1197,8 +1181,8 @@ void pagamento(){
 //=================================================== SANGRIA
 void Sangria(){
     if (caixa=='F') {
-      caixaFechado(); 
-    } 
+      caixaFechado();
+    }
     else{
       if (vCaixa<50){
       printf("\n|----------------------------------------------------|\n");
@@ -1243,9 +1227,9 @@ void Sangria(){
 /*
 novaVenda1(){
   if (caixa=='F') {
-    caixaFechado(); 
-  } 
-  else{  
+    caixaFechado();
+  }
+  else{
 
     while (true) {
       listaProdutos();
@@ -1264,7 +1248,7 @@ novaVenda1(){
         system("cls");
         continue;
       }
- 
+
       printf("Produto Escolhido: %s\n", produto[indProduto].descricao);
       printf("Preco: %.2f\n", produto[indProduto].precoVenda);
 
@@ -1291,7 +1275,7 @@ novaVenda1(){
 //produto[numProdutos-1].estoque=produto[numProdutos-1].estoque-qtd;
 //          printf("Produto Escolhido: %d", produto[indProduto].estoque);
 //          system("pause");
- 
+
       venda = realloc(venda, (numVendas + 1) * sizeof(struct CadastroVenda));
       if (venda == NULL){
          printf("Erro de alocação de memória.\n");
@@ -1307,7 +1291,7 @@ novaVenda1(){
 
 //      printf("Qtd do Item: %d\n", venda[numVendas].quantidade);
 //      printf("Preco do Item: %.2f\n", venda[numVendas].precoVenda);
- 
+
       produto[indProduto].estoque=produto[indProduto].estoque-qtd;
 
       printf("Total do Item: %.2f\n", venda[numVendas].precoVenda*venda[numVendas].quantidade);
@@ -1351,9 +1335,9 @@ void adicionarVenda(struct CadastroVenda *venda, int num, int cliente, const cha
 
 novaVenda(){
   if (caixa=='F') {
-    caixaFechado(); 
-  } 
-  else{  
+    caixaFechado();
+  }
+  else{
     int continuarVenda = 1;
     while (continuarVenda) {
 //        if (numVendas >= INICIAL_MAX_VENDAS) {
@@ -1370,7 +1354,7 @@ novaVenda(){
         scanf("%d", &codcliente);
 
         indProduto=pesquisaCliente(codcliente);
-        if (indProduto==-1){ 
+        if (indProduto==-1){
           printf("\nCliente nao cadastrado.\n\n");
           system("pause");
           system("cls");
@@ -1405,7 +1389,7 @@ novaVenda(){
             scanf("%d", &cod);
 
             indProduto=pesquisaItem(cod);
-            if (indProduto==-1){ 
+            if (indProduto==-1){
               printf("\nProduto nao cadastrado.\n\n");
               system("pause");
               system("cls");
