@@ -6,7 +6,13 @@
 #include <math.h>
 #include <time.h>
 #include <windows.h>
-#include <unistd.h>
+
+#define INICIAL_MAX_PRODUTOS 10
+#define INICIAL_MAX_VENDAS 10
+#define LOGIN_MIN 8
+#define LOGIN_MAX 12
+#define PASSWORD_MIN 6
+#define PASSWORD_MAX 8
 
 struct CadastroCliente *cliente = NULL;
 struct CadastroUsuario *usuario = NULL;
@@ -16,36 +22,27 @@ struct CadastroVenda *venda = NULL;
 struct ProdutoVenda *produtovenda = NULL;
 struct SituacaoCaixa *posicaoCaixa = NULL;
 
-#define INICIAL_MAX_PRODUTOS 10
-#define INICIAL_MAX_VENDAS 10
-
-#define LOGIN_MIN 8
-#define LOGIN_MAX 12
-#define PASSWORD_MIN 6
-#define PASSWORD_MAX 8
-
-//Venda *vendas = NULL;
-//Pagamento *pagamentos = NULL;
 int contadorMain = 0, numClientes = 0, numProdutos = 0, numVendas = 0, numPagamentos = 0, opcao = 0, loopDesconto=0, indProduto=0;
 int vendasRealizadas = 0, qtd=0;
 float inicioCaixa = 0.0, totalCartao = 0.0, totalDin = 0.0, totalDinCartao = 0.0, totalFat= 0.0, vCaixa = 0.0;
 float totalDesc = 0, totalBruto = 0, pagoDin = 0, pagoCartao= 0.0, desc = 0, desconto = 0, troco = 0.0, retirada = 0.0, margem = 0;
 char caixa = 'F', tipoUsuario = ' ';
 char nomeUsuario[LOGIN_MAX + 1];
+int numusuarios, numcategorias;
+
 FILE *arquivoCliente, *arquivoProduto, *arquivoCaixa, *arquivoVenda, *arquivoUsuario, *arquivoCategoria, *arquivoCaixa;
 
-int numusuarios, numcategorias;
 //declaração de structs
 //struct de cadastro de usuarios
-struct CadastroUsuario{
+struct CadastroUsuario {
     int cod;
     char login[LOGIN_MAX + 1];
     char password[PASSWORD_MAX + 1];
     char tipo; // 1: Administrador, 2: Usuário
 };
+
 //struct de cadastro de clientes
-struct CadastroCliente
-{
+struct CadastroCliente {
     int cod;
     char nome[30];
     char nomesocial[30];
@@ -56,18 +53,17 @@ struct CadastroCliente
     char cep[9];
     char telefone[30];
 };
+
 // Cadastro de categoria
-struct CadastroCategoria
-{
+struct CadastroCategoria {
     int cod;
     char descricao[30];
 };
+
 //struct de cadastro de produtos
-struct CadastroProduto
-{
+struct CadastroProduto {
     int cod;
     char descricao[30];
-//    char categoria[30];
     struct CadastroCategoria categoria;
     float precoCompra;
     float margem;
@@ -76,8 +72,7 @@ struct CadastroProduto
     int estoqueminimo;
 };
 
-struct ProdutoVenda
-{
+struct ProdutoVenda {
     int num;
     int cod;
     char descricao[30];
@@ -86,15 +81,13 @@ struct ProdutoVenda
     float valorTotal;
 };
 
-struct Data
-{
+struct Data {
     int dia;
     int mes;
     int ano;
 };
 
-struct Data obterDataAtual()
-{
+struct Data obterDataAtual() {
     struct Data dataAtual;
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
@@ -104,8 +97,7 @@ struct Data obterDataAtual()
     return dataAtual;
 }
 
-struct CadastroVenda
-{
+struct CadastroVenda {
     int num;
     int cliente;
     char nomeCliente[30];
@@ -116,8 +108,7 @@ struct CadastroVenda
     char metodoPagamento;
 };
 
-struct SituacaoCaixa
-{
+struct SituacaoCaixa {
     char caixa;
     float inicioCaixa;
     float totalDin;
@@ -133,7 +124,7 @@ struct Data lerData() {
     return data;
 }
 
-int compararDatas(struct Data d1, struct Data d2) {
+int compararDatas(const struct Data d1, const struct Data d2) {
     if (d1.ano > d2.ano) return 1;
     if (d1.ano < d2.ano) return -1;
     if (d1.mes > d2.mes) return 1;
@@ -148,21 +139,16 @@ int dataDentroDoPeriodo(struct Data data, struct Data inicio, struct Data fim) {
 }
 
 //função que impede letras onde pede-se números
-bool validaNumero(char *numero, int tamanho)
-{
-    if (numero==NULL)
-    {
+bool validaNumero(const char *numero, const int tamanho) {
+    if (numero==NULL) {
         return false;
     }
-    int len = strlen(numero);
-    if ((tamanho>0) && (len != tamanho))
-    {
+    const int len = strlen(numero);
+    if ((tamanho>0) && (len != tamanho)) {
         return false;
     }
-    for (int i = 0; i < len; i++)
-    {
-        if (!isdigit(numero[i]))
-        {
+    for (int i = 0; i < len; i++) {
+        if (!isdigit(numero[i])) {
             return false;
         }
     }
@@ -170,55 +156,43 @@ bool validaNumero(char *numero, int tamanho)
 }
 
 //função que impede mandar espaço vazio
-bool validacaracter(char *caracter){
-    int len = strlen(caracter);
-    if (len == 0)
-    {
+bool validacaracter(const char *caracter) {
+    const int len = strlen(caracter);
+    if (len == 0) {
         return false;
     }
     return true;
 }
 
-float truncar(float valor, int casas_decimais){
-    float potencia = pow(10.0f, casas_decimais);
+float truncar(const float valor, const int casas_decimais) {
+    const float potencia = pow(10.0f, casas_decimais);
     return truncf(valor * potencia) / potencia;
 }
 
-int pesquisaItem(int codigo){
-    int i;
-    int resultado =-1;
-    for (int i = 0; i < numProdutos; i++)
-    {
-        if (produto[i].cod==codigo)
-        {
+int pesquisaItem(int codigo) {
+    int resultado =- 1;
+    for (int i = 0; i < numProdutos; i++) {
+        if (produto[i].cod == codigo) {
             resultado = i;
         }
     }
     return resultado;
 }
 
-int pesquisaCliente(int codigo)
-{
-    int i;
+int pesquisaCliente(int codigo) {
     int resultado =-1;
-    for (int i = 0; i < numClientes; i++)
-    {
-        if (cliente[i].cod==codigo)
-        {
+    for (int i = 0; i < numClientes; i++) {
+        if (cliente[i].cod==codigo) {
             resultado = i;
         }
     }
     return resultado;
 }
 
-int pesquisaCategoria(int codigo)
-{
-    int i;
+int pesquisaCategoria(int codigo) {
     int resultado =-1;
-    for (int i = 0; i < numcategorias; i++)
-    {
-        if (categoria[i].cod==codigo)
-        {
+    for (int i = 0; i < numcategorias; i++) {
+        if (categoria[i].cod == codigo) {
             resultado = i;
         }
     }
@@ -226,21 +200,17 @@ int pesquisaCategoria(int codigo)
 }
 
 //comparar nome de clientes para ordem alfabetica
-int compararNome(const void *a, const void *b)
-{
+int compararNome(const void *a, const void *b) {
     return strcmp(((struct CadastroCliente *)a)->nome, ((struct CadastroCliente *)b)->nome);
 }
 
 //comparar nome de produtos para ordem alfabetica
-int compararProduto(const void *a, const void *b)
-{
+int compararProduto(const void *a, const void *b) {
     return strcmp(((struct CadastroProduto *)a)->descricao, ((struct CadastroProduto *)b)->descricao);
 }
 
 //=================================================== MENU PRINCIPAL
-void menuPrincipal()
-{
-
+void menuPrincipal() {
     clearScreen();
     printf("\n|---------------------------------------------|\n");
     printf("|           SISTEMA MERCADO BERE              |\n");
@@ -263,12 +233,9 @@ void menuPrincipal()
 //=================================================== FIM MENU PRINCIPAL
 
 //=================================================== MENU DE CADASTROS
-void menuCadastros()
-{
-
+void menuCadastros() {
     int cadastrar=0;
-    while(cadastrar != 5)
-    {
+    while(cadastrar != 5) {
         clearScreen();
         printf("\n|---------------------------------------------|\n");
         printf("|                                             |\n");
@@ -286,8 +253,7 @@ void menuCadastros()
         printf("|_____________________________________________|\n\n");
         scanf("%d", &cadastrar);
 
-        switch (cadastrar)
-        {
+        switch (cadastrar) {
 
         //cadastrar usuarios
         case 1:
@@ -296,8 +262,7 @@ void menuCadastros()
             }
             else{
                  printf("\n Usuario sem permissao de acesso\n");
-             //    _getch();
-                 _getch();
+                 getchar();
             }
             break;
 
@@ -326,8 +291,8 @@ void menuCadastros()
     }
 }
 
-void get_password(char *password, int maxLength) {
-    HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+void get_password(char *password, const int maxLength) {
+    const HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
     DWORD mode;
     DWORD count;
     char ch;
@@ -368,7 +333,7 @@ void get_password(char *password, int maxLength) {
 
 
 void get_password1(char *password, int maxLength) {
-    HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+    const HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
     DWORD mode;
     DWORD count;
     char ch;
@@ -392,30 +357,10 @@ void get_password1(char *password, int maxLength) {
     printf("\n");
 
     clear_input_buffer();
-
 }
 
 void clearScreen() {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    DWORD count;
-    DWORD cellCount;
-    COORD homeCoords = { 0, 0 };
-
-    if (hConsole == INVALID_HANDLE_VALUE) return;
-
-    // Obtém a informação da tela do console
-    if (!GetConsoleScreenBufferInfo(hConsole, &csbi)) return;
-    cellCount = csbi.dwSize.X * csbi.dwSize.Y;
-
-    // Preenche a tela com espaços
-    if (!FillConsoleOutputCharacter(hConsole, (TCHAR) ' ', cellCount, homeCoords, &count)) return;
-
-    // Define os atributos
-    if (!FillConsoleOutputAttribute(hConsole, csbi.wAttributes, cellCount, homeCoords, &count)) return;
-
-    // Move o cursor para o topo da tela
-    SetConsoleCursorPosition(hConsole, homeCoords);
+    system("cls");
 }
 
 void clear_input_buffer() {
@@ -426,17 +371,12 @@ void clear_input_buffer() {
 //=================================================== FIM MENU DE CADASTROS
 
 //=================================================== CADASTRAR USUARIOS
-void cadastroUsuario()
-{
-
-//    char descricao[30];    
+void cadastroUsuario() {
     char confirma;
-    do
-    {
+    do {
 
         usuario = realloc(usuario, (numusuarios + 1) * sizeof(struct CadastroUsuario));
-        if (usuario == NULL)
-        {
+        if (usuario == NULL) {
             printf("\n|-----------------------------------------------------|\n");
             printf("| ERRO NA ALOCACAO DE MEMORIA! ENCERRANDO PROGRAMA... |\n");
             printf("|-----------------------------------------------------|\n");
@@ -447,8 +387,7 @@ void cadastroUsuario()
 
         //LOGIN DO usuario
         fflush(stdin);
-        while (true)
-        {
+        while (true) {
             char descricao[30];            
             clearScreen();
             printf("\n|-----------------------------------------------------|\n");
@@ -458,22 +397,14 @@ void cadastroUsuario()
             printf("| - - - - - - - - - - - - - - - - - - - - - - - - - - |\n");
             printf("\n  1. Digite o login do usuario: ");
             fgets(descricao, sizeof(descricao), stdin);
-//            usuario[numusuarios].login[strcspn(usuario[numusuarios].login, "\n")] = 0;
             descricao[strcspn(descricao, "\n")] = 0;
-            if (validacaracter(descricao))
-            {
+            if (validacaracter(descricao)) {
                 if ((strlen(descricao)>=LOGIN_MIN) && (strlen(descricao)<=LOGIN_MAX)){
                    strncpy(usuario[numusuarios].login, descricao, sizeof(descricao) - 1);
                    break;
                 }
-                else
-                {
-                   printf("\n  Erro! login com tamanho invalido. Tente Novamente.");
-                }
-        
-            }
-            else
-            {
+                printf("\n  Erro! login com tamanho invalido. Tente Novamente.");
+            } else {
                 printf("\n  Erro! login invalido. Tente Novamente.");
             }
         }
@@ -481,78 +412,49 @@ void cadastroUsuario()
 
         //SENHA
 
-        while (true)
-        {
-//            char senha[30];            
+        while (true) {
             char password[20];
 
             printf("\n\n  2. Digite a senha do usuario: ");
-//            fgets(senha, sizeof(senha), stdin);
-
             get_password(password, sizeof(password));
-//            clear_input_buffer();
 
- //            usuario[numusuarios].password[strcspn(usuario[numusuarios].password, "\n")] = 0;
- //           senha[strcspn(senha, "\n")] = 0;
-            if (validacaracter(password))
-            {
-//                printf("Tamanho: %d\n", strlen(senha));
-//                _getch();  
+            if (validacaracter(password)) {
 
-                if ((strlen(password)>=PASSWORD_MIN) && (strlen(password)<=PASSWORD_MAX)){
+                if ((strlen(password)>=PASSWORD_MIN) && (strlen(password)<=PASSWORD_MAX)) {
                    strncpy(usuario[numusuarios].password, password, sizeof(password) - 1);
                    break;
                 }
-                else
-                {
-                   printf("\n  Erro! senha com tamanho invalido. Tente Novamente.");
-                }
-            }
-            else
-            {
+                printf("\n  Erro! senha com tamanho invalido. Tente Novamente.");
+            } else {
                 printf("\n  Erro! Senha invalida. Tente Novamente.");
             }
         }
-//        fflush(stdin);
 
         // Tipo
-        while (true)
-        {
+        while (true) {
 
             printf("\n\n  3. Digite o Tipo do usuario(1-Administrador ou 2-Funcionario): ");
             scanf(" %c", &usuario[numusuarios].tipo);
-//            fgets(usuario[numusuarios].tipo, stdin);
-//            usuario[numusuarios].tipo[strcspn(usuario[numusuarios].tipo, "\n")] = 0;
-//            senha[strcspn(senha, "\n")] = 0;
-//            fflush(stdin);
-//            printf("\n\n  Passou 0");
-            
-            if (usuario[numusuarios].tipo == '1' || usuario[numusuarios].tipo == '2')
-            {
-                if ((numusuarios==0) && (usuario[numusuarios].tipo != '1'))
-                {
+
+            if (usuario[numusuarios].tipo == '1' || usuario[numusuarios].tipo == '2') {
+                if ((numusuarios==0) && (usuario[numusuarios].tipo != '1')) {
                   printf("\n  !Erro! Para o cadastro do primeiro usuario tipo deve ser 1-Administrador. Tente Novamente.");
                 }
-                else
-                {
+                else {
                   break;
                 }
             }
-            else
-            {
+            else {
                 printf("\n  !Erro! tipo invalido. Tente Novamente.");
             }
         }
         fflush(stdin);
-
         numusuarios++;
 
 //se quiser salvar dados do usuario recem cadastrado
 //------------------------------------------------------------------------------------------------
         char salvar;
-
-        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N'))
-        {
+        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N')) {
 
             clearScreen();
 
@@ -562,94 +464,65 @@ void cadastroUsuario()
             scanf(" %c", &salvar);
             fflush(stdin);
 
-            if (salvar == 's' || salvar == 'S')
-            {
+            if (salvar == 's' || salvar == 'S') {
                 arquivoUsuario = fopen("usuarios.dat", "wb");
                 fwrite(&numusuarios, sizeof(int), 1, arquivoUsuario);
                 fwrite(usuario, sizeof(struct CadastroUsuario), numusuarios, arquivoUsuario);
                 fclose(arquivoUsuario);
-             //   clearScreen();
                 clearScreen();
                 printf("\n|--------------------------------------------|\n");
                 printf("|   usuario SALVO...                         |\n");
                 break;
             }
-            else
-            {
-                if (salvar == 'n' || salvar == 'N')
-                {
-                    clearScreen();
-                    printf("\n|--------------------------------------------|\n");
-                    printf("|   usuario NAO SALVO...                     |\n");
-                    break;
-                }
-                else
-                {
-                    opinvalida();
-                }
+            if (salvar == 'n' || salvar == 'N') {
+                clearScreen();
+                printf("\n|--------------------------------------------|\n");
+                printf("|   usuario NAO SALVO...                     |\n");
+                break;
             }
+            opinvalida();
         }
 
 //se quiser cadastrar mais um usuario
 //------------------------------------------------------------------------------------------------
-        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N'))
-        {
+        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N')) {
             printf("|- - - - - - - - - - - - - - - - - - - - - - |\n");
             printf("|   DESEJA INCLUIR UM NOVO usuario? (s/n)    |\n");
             printf("|--------------------------------------------|\n\n");
             scanf(" %c", &confirma);
             fflush(stdin);
-            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N')
-            {
+            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N') {
                 clearScreen();
                 break;
             }
-            else
-            {
-                opinvalida();
-            }
+            opinvalida();
         }
-        if ( confirma == 'n' || confirma == 'N')
-        {
+        if ( confirma == 'n' || confirma == 'N') {
             clearScreen();
             break;
         }
 
     }
-    while (confirma =! 'n'||confirma != 'N');
+    while (confirma != 'n'||confirma != 'N');
 }
 //=================================================== FIM CADASTRAR USUARIOS
 
 //=================================================== CADASTRAR CATEGORIAS
-void cadastroCategoria()
-{
-/*
-            for (int i = 0; i < numcategorias; i++)
-            {
-                printf("| Codigo.........: %d\n", categoria[i].cod);
-                printf("| Descricao......: %s\n", categoria[i].descricao);
-            }
-            _getch();
-*/
+void cadastroCategoria() {
     char confirma;
-    do
-    {
-
+    do {
         categoria = realloc(categoria, (numcategorias + 1) * sizeof(struct CadastroCategoria));
-        if (categoria == NULL)
-        {
+        if (categoria == NULL) {
             printf("\n|-----------------------------------------------------|\n");
             printf("| ERRO NA ALOCACAO DE MEMORIA! ENCERRANDO PROGRAMA... |\n");
             printf("|-----------------------------------------------------|\n");
             exit(1);
         }
-
         categoria[numcategorias].cod = numcategorias + 1;
 
         //Cadastro de categoria 
         fflush(stdin);
-        while (true)
-        {
+        while (true) {
             clearScreen();
             printf("\n|-----------------------------------------------------|\n");
             printf("|                                                     |\n");
@@ -659,27 +532,19 @@ void cadastroCategoria()
             printf("\n  1. Digite a categoria: ");
             fgets(categoria[numcategorias].descricao, sizeof(categoria[numcategorias].descricao), stdin);
             categoria[numcategorias].descricao[strcspn(categoria[numcategorias].descricao, "\n")] = 0;
-            if (validacaracter(categoria[numcategorias].descricao))
-            {
-//               strncpy(descricao, produto[indProduto].descricao, sizeof(produto[indProduto].descricao) - 1);
-
+            if (validacaracter(categoria[numcategorias].descricao)) {
                break;
             }
-            else
-            {
-                printf("\n  Erro! login invalido. Tente Novamente.");
-                _getch();
-            }
+            printf("\n  Erro! login invalido. Tente Novamente.");
+            getchar();
         }
         fflush(stdin);
-
         numcategorias++;
 
 //se quiser salvar dados do categoria recem cadastrado
 //------------------------------------------------------------------------------------------------
         char salvar;
-        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N'))
-        {
+        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N')) {
             clearScreen();
             printf("\n|---------------------------------------------------------|\n");
             printf("|  DESEJA SALVAR OS DADOS DE CATEGORIAS CADASTRADOS? (s/n)  |\n");
@@ -687,8 +552,7 @@ void cadastroCategoria()
             scanf(" %c", &salvar);
             fflush(stdin);
 
-            if (salvar == 's' || salvar == 'S')
-            {
+            if (salvar == 's' || salvar == 'S') {
                 arquivoCategoria = fopen("categorias.dat", "wb");
                 fwrite(&numcategorias, sizeof(int), 1, arquivoCategoria);
                 fwrite(categoria, sizeof(struct CadastroCategoria), numcategorias, arquivoCategoria);
@@ -698,63 +562,45 @@ void cadastroCategoria()
                 printf("|   CATEGORIA SALVO...                         |\n");
                 break;
             }
-            else
-            {
-                if (salvar == 'n' || salvar == 'N')
-                {
-                    clearScreen();
-                    printf("\n|--------------------------------------------|\n");
-                    printf("|   CATEGORIA NAO SALVA...                     |\n");
-                    break;
-                }
-                else
-                {
-                    opinvalida();
-                }
+            if (salvar == 'n' || salvar == 'N') {
+                clearScreen();
+                printf("\n|--------------------------------------------|\n");
+                printf("|   CATEGORIA NAO SALVA...                     |\n");
+                break;
             }
+            opinvalida();
         }
 
 //se quiser cadastrar mais um categoria
 //------------------------------------------------------------------------------------------------
-        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N'))
-        {
+        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N')) {
             printf("|- - - - - - - - - - - - - - - - - - - - - - |\n");
             printf("|   DESEJA INCLUIR UMA NOVA CATEGORIA? (s/n)    |\n");
             printf("|--------------------------------------------|\n\n");
             scanf(" %c", &confirma);
             fflush(stdin);
-            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N')
-            {
+            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N') {
                 clearScreen();
                 break;
             }
-            else
-            {
-                opinvalida();
-            }
+            opinvalida();
         }
-        if ( confirma == 'n' || confirma == 'N')
-        {
+        if ( confirma == 'n' || confirma == 'N') {
             clearScreen();
             break;
         }
 
     }
-    while (confirma =! 'n'||confirma != 'N');
+    while (confirma != 'n'||confirma != 'N');
 }
 //=================================================== FIM CADASTRAR CATEGORIAS
 
 //=================================================== CADASTRAR CLIENTES
-void cadastroCliente()
-{
-
+void cadastroCliente() {
     char confirma;
-    do
-    {
-
+    do {
         cliente = realloc(cliente, (numClientes + 1) * sizeof(struct CadastroCliente));
-        if (cliente == NULL)
-        {
+        if (cliente == NULL) {
             printf("\n|-----------------------------------------------------|\n");
             printf("| ERRO NA ALOCACAO DE MEMORIA! ENCERRANDO PROGRAMA... |\n");
             printf("|-----------------------------------------------------|\n");
@@ -765,8 +611,7 @@ void cadastroCliente()
 
         //NOME DO CLIENTE
         fflush(stdin);
-        while (true)
-        {
+        while (true) {
             clearScreen();
             printf("\n|-------------------------------------------------------------|\n");
             printf("|                                                             |\n");
@@ -776,55 +621,40 @@ void cadastroCliente()
             printf("\n  1. Digite o nome do cliente: ");
             fgets(cliente[numClientes].nome, sizeof(cliente[numClientes].nome), stdin);
             cliente[numClientes].nome[strcspn(cliente[numClientes].nome, "\n")] = 0;
-            if (validacaracter(cliente[numClientes].nome))
-            {
+            if (validacaracter(cliente[numClientes].nome)) {
                 break;
             }
-            else
-            {
-                printf("\n  !Erro! Nome invalido. Tente Novamente.");
-            }
+            printf("\n  !Erro! Nome invalido. Tente Novamente.");
         }
         fflush(stdin);
 
         //NOME SOCIAL
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  2. Digite o nome social do cliente: ");
             fgets(cliente[numClientes].nomesocial, sizeof(cliente[numClientes].nomesocial), stdin);
             cliente[numClientes].nomesocial[strcspn(cliente[numClientes].nomesocial, "\n")] = 0;
-            if (validacaracter(cliente[numClientes].nomesocial))
-            {
+            if (validacaracter(cliente[numClientes].nomesocial)) {
                 break;
             }
-            else
-            {
-                printf("\n  !Erro! Nome social invalido. Tente Novamente.");
-            }
+            printf("\n  !Erro! Nome social invalido. Tente Novamente.");
         }
         fflush(stdin);
 
         // CPF
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  3. Digite o CPF do cliente: ");
             scanf("%s", &cliente[numClientes].cpf);
-            if (validaNumero(cliente[numClientes].cpf, 11))
-            {
+            if (validaNumero(cliente[numClientes].cpf, 11)) {
                 break;
             }
-            else
-            {
-                printf("\n  !Erro! CPF invalido. Tente Novamente.");
-            }
+            printf("\n  !Erro! CPF invalido. Tente Novamente.");
         }
         fflush(stdin);
 
         // RUA
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  4. Digite a rua do cliente: ");
             fgets(cliente[numClientes].rua, sizeof(cliente[numClientes].rua), stdin);
@@ -833,73 +663,51 @@ void cadastroCliente()
             {
                 break;
             }
-            else
-            {
-                printf("\n  !Erro! Rua invalida. Tente Novamente.");
-            }
+            printf("\n  !Erro! Rua invalida. Tente Novamente.");
         }
         fflush(stdin);
 
         //NUMERO DA CASA
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  5. Digite o numero da residencia do cliente: ");
             scanf("%s", &cliente[numClientes].num);
 
-            if (validaNumero(cliente[numClientes].num, 0))
-            {
+            if (validaNumero(cliente[numClientes].num, 0)) {
                 break;
             }
-            else
-            {
-                fflush(stdin);
-                printf("\n  !Erro! Numero de residencia invalido. Tente Novamente.");
-            }
+            fflush(stdin);
+            printf("\n  !Erro! Numero de residencia invalido. Tente Novamente.");
         }
         fflush(stdin);
 
         //BAIRRO
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  6. Digite o bairro do cliente: ");
             fgets(cliente[numClientes].bairro, sizeof(cliente[numClientes].bairro), stdin);
             cliente[numClientes].bairro[strcspn(cliente[numClientes].bairro, "\n")] = 0;
-            if (validacaracter(cliente[numClientes].bairro))
-            {
+            if (validacaracter(cliente[numClientes].bairro)) {
                 break;
             }
-            else
-            {
-                printf("\n  !Erro! Rua invalida. Tente Novamente.");
-            }
+            printf("\n  !Erro! Rua invalida. Tente Novamente.");
         }
         fflush(stdin);
 
         //CEP
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  7. Digite o CEP do cliente: ");
-//            scanf("%s", &cliente[numClientes].cep);
             fgets(cliente[numClientes].cep, sizeof(cliente[numClientes].cep), stdin);
             cliente[numClientes].cep[strcspn(cliente[numClientes].cep, "\n")] = 0;
 
-            if (validacaracter(cliente[numClientes].cep))
-            {
-              if (validaNumero(cliente[numClientes].cep, 8))
-              {
+            if (validacaracter(cliente[numClientes].cep)) {
+              if (validaNumero(cliente[numClientes].cep, 8)) {
                  break;
               }
-              else
-              {
-                printf("\n  !Erro! CEP invalido. Tente Novamente1.");
-                fflush(stdin);
-              }
-            }
-            else
-            {
+              printf("\n  !Erro! CEP invalido. Tente Novamente1.");
+              fflush(stdin);
+            } else {
                 printf("\n  !Erro! CEP invalido. Tente Novamente2.");
                 fflush(stdin);
             }
@@ -907,20 +715,15 @@ void cadastroCliente()
         fflush(stdin);
 
         //TELEFONE
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  8. Digite o telefone/whats do cliente: ");
             fgets(cliente[numClientes].telefone, sizeof(cliente[numClientes].telefone), stdin);
             cliente[numClientes].telefone[strcspn(cliente[numClientes].telefone, "\n")] = 0;
-            if (validacaracter(cliente[numClientes].telefone))
-            {
+            if (validacaracter(cliente[numClientes].telefone)) {
                 break;
             }
-            else
-            {
-                printf("\n  !Erro! Telefone/whats invalida. Tente Novamente.");
-            }
+            printf("\n  !Erro! Telefone/whats invalida. Tente Novamente.");
         }
         fflush(stdin);
 
@@ -929,8 +732,7 @@ void cadastroCliente()
 //se quiser salvar dados do cliente recem cadastrado
 //------------------------------------------------------------------------------------------------
         char salvar;
-        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N'))
-        {
+        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N')) {
             clearScreen();
             printf("\n|---------------------------------------------------------|\n");
             printf("|  DESEJA SALVAR OS DADOS DE CLIENTES CADASTRADOS? (s/n)  |\n");
@@ -938,8 +740,7 @@ void cadastroCliente()
             scanf(" %c", &salvar);
             fflush(stdin);
 
-            if (salvar == 's' || salvar == 'S')
-            {
+            if (salvar == 's' || salvar == 'S') {
                 arquivoCliente = fopen("clientes.dat", "wb");
                 fwrite(&numClientes, sizeof(int), 1, arquivoCliente);
                 fwrite(cliente, sizeof(struct CadastroCliente), numClientes, arquivoCliente);
@@ -949,63 +750,46 @@ void cadastroCliente()
                 printf("|   CLIENTE SALVO...                         |\n");
                 break;
             }
-            else
-            {
-                if (salvar == 'n' || salvar == 'N')
-                {
-                    clearScreen();
-                    printf("\n|--------------------------------------------|\n");
-                    printf("|   CLIENTE NAO SALVO...                     |\n");
-                    break;
-                }
-                else
-                {
-                    opinvalida();
-                }
+            if (salvar == 'n' || salvar == 'N') {
+                clearScreen();
+                printf("\n|--------------------------------------------|\n");
+                printf("|   CLIENTE NAO SALVO...                     |\n");
+                break;
             }
+            opinvalida();
         }
 
 //se quiser cadastrar mais um cliente
 //------------------------------------------------------------------------------------------------
-        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N'))
-        {
+        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N')) {
             printf("|- - - - - - - - - - - - - - - - - - - - - - |\n");
             printf("|   DESEJA INCLUIR UM NOVO CLIENTE? (s/n)    |\n");
             printf("|--------------------------------------------|\n\n");
             scanf(" %c", &confirma);
             fflush(stdin);
-            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N')
-            {
+            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N') {
                 clearScreen();
                 break;
             }
-            else
-            {
-                opinvalida();
-            }
+            opinvalida();
         }
-        if ( confirma == 'n' || confirma == 'N')
-        {
+        if ( confirma == 'n' || confirma == 'N') {
             clearScreen();
             break;
         }
 
     }
-    while (confirma =! 'n'||confirma != 'N');
+    while (confirma != 'n'||confirma != 'N');
 }
 //=================================================== FIM CADASTRAR CLIENTES
 
 //=================================================== CADASTRAR PRODUTOS
-void cadastroProduto()
-{
+void cadastroProduto() {
 
     char confirma;
-    while (confirma =! 'n'||confirma != 'N')
-    {
-
+    while (confirma != 'n'||confirma != 'N') {
         produto = realloc(produto, (numProdutos + 1) * sizeof(struct CadastroProduto));
-        if (produto == NULL)
-        {
+        if (produto == NULL) {
             printf("\n|-----------------------------------------------------|\n");
             printf("| ERRO NA ALOCACAO DE MEMORIA! ENCERRANDO PROGRAMA... |\n");
             printf("|-----------------------------------------------------|\n");
@@ -1020,8 +804,7 @@ void cadastroProduto()
 
         //NOME DO PRODUTO
         fflush(stdin);
-        while (true)
-        {
+        while (true) {
             clearScreen();
             printf("\n|-------------------------------------------------------------|\n");
             printf("|                                                             |\n");
@@ -1031,47 +814,23 @@ void cadastroProduto()
             printf("\n  1. Digite o nome do produto: ");
             fgets(produto[numProdutos].descricao, sizeof(produto[numProdutos].descricao), stdin);
             produto[numProdutos].descricao[strcspn(produto[numProdutos].descricao, "\n")] = 0;
-            if (validacaracter(produto[numProdutos].descricao))
-            {
+            if (validacaracter(produto[numProdutos].descricao)) {
                 break;
             }
-            else
-            {
-                printf("\n  !Erro! Nome invalido. Tente Novamente.\n");
-            }
+            printf("\n  !Erro! Nome invalido. Tente Novamente.\n");
         }
         fflush(stdin);
-/*
-        while (true)
-        {
-            printf("\n|-------------------------------------------------------------|\n");
-            printf("\n  2. Digite a categoria do produto: ");
-            fgets(produto[numProdutos].categoria, sizeof(produto[numProdutos].categoria), stdin);
-            produto[numProdutos].categoria[strcspn(produto[numProdutos].categoria, "\n")] = 0; //
-            if (validacaracter(produto[numProdutos].categoria))
-            {
-                break;
-            }
-            else
-            {
-                printf("\n !Erro! Categoria invalida. Tente Novamente.\n");
-            }
-        }
-        fflush(stdin);
-*/
+
         //CATEGORIA
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  2. Digite a categoria do produto: ");
-            if (scanf("%d", &produto[numProdutos].categoria.cod) == 1)
-            {
+            if (scanf("%d", &produto[numProdutos].categoria.cod) == 1) {
 
                indProduto=pesquisaCategoria(produto[numProdutos].categoria.cod);
-               if (indProduto==-1)
-               {
+               if (indProduto==-1) {
                   printf("\n  Categoria nao cadastrada.\n\n");
-                  _getch();
+                  getchar();
                   clearScreen();
                   continue;
                }
@@ -1086,12 +845,10 @@ void cadastroProduto()
 
 
         //PRECO DE COMPRA
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  3. Digite o preco de compra do produto: ");
-            if (scanf("%f", &produto[numProdutos].precoCompra) == 1)
-            {
+            if (scanf("%f", &produto[numProdutos].precoCompra) == 1) {
                 break;
             }
             printf("\n  !Erro! Preco de compra invalido. Tente Novamente.\n");
@@ -1101,12 +858,10 @@ void cadastroProduto()
         fflush(stdin);
 
         //MARGEM DE LUCRO
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  4. Digite a porcentagem da margem de lucro do produto: ");
-            if (scanf("%f", &produto[numProdutos].margem) == 1)
-            {
+            if (scanf("%f", &produto[numProdutos].margem) == 1) {
                 break;
             }
             printf("\n  !Erro! Margem invalida. Tente Novamente.\n");
@@ -1122,8 +877,7 @@ void cadastroProduto()
         printf("\n  - Preco de venda do produto: %.2f\n", produto[numProdutos].precoVenda);
 
         //ESTOQUE
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  5. Digite o estoque do produto: ");
             if (scanf("%d", &produto[numProdutos].estoque) == 1)
@@ -1135,12 +889,10 @@ void cadastroProduto()
         }
 
         //ESTOQUE MINIMO
-        while (true)
-        {
+        while (true) {
             printf("\n|-------------------------------------------------------------|\n");
             printf("\n  6. Digite o estoque minimo do produto: ");
-            if (scanf("%d", &produto[numProdutos].estoqueminimo) == 1)
-            {
+            if (scanf("%d", &produto[numProdutos].estoqueminimo) == 1) {
                 break;
             }
             printf("\n  !Erro! Estoque minimo invalido. Tente Novamente.\n");
@@ -1151,8 +903,7 @@ void cadastroProduto()
 //se quiser salvar dados do cliente recem cadastrado
 //------------------------------------------------------------------------------------------------
         char salvar;
-        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N'))
-        {
+        while ((salvar !='S' || salvar!='s')||(salvar!='n'||salvar!='N')) {
             clearScreen();
             printf("\n|---------------------------------------------------------|\n");
             printf("|  DESEJA SALVAR OS DADOS DO PRODUTO CADASTRADO? (s/n)    |\n");
@@ -1160,8 +911,7 @@ void cadastroProduto()
             scanf(" %c", &salvar);
             fflush(stdin);
 
-            if (salvar == 's' || salvar == 'S')
-            {
+            if (salvar == 's' || salvar == 'S') {
                 arquivoProduto = fopen("produtos.dat", "wb");
                 fwrite(&numProdutos, sizeof(int), 1, arquivoProduto);
                 fwrite(produto, sizeof(struct CadastroProduto), numProdutos, arquivoProduto);
@@ -1171,27 +921,19 @@ void cadastroProduto()
                 printf("|   PRODUTO SALVO...                         |\n");
                 break;
             }
-            else
-            {
-                if (salvar == 'n' || salvar == 'N')
-                {
-                    clearScreen();
-                    printf("\n|--------------------------------------------|\n");
-                    printf("|   PRODUTO NAO SALVO...                     |\n");
-                    break;
-                }
-                else
-                {
-                    opinvalida();
-                }
+            if (salvar == 'n' || salvar == 'N') {
+                clearScreen();
+                printf("\n|--------------------------------------------|\n");
+                printf("|   PRODUTO NAO SALVO...                     |\n");
+                break;
             }
+            opinvalida();
         }
 
 
         //se quiser cadastrar mais um produto
 //------------------------------------------------------------------------------------------------
-        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N'))
-        {
+        while ((confirma != 'S' || confirma!= 's')||(confirma != 'n' || confirma != 'N')) {
 
             printf("|- - - - - - - - - - - - - - - - - - - - - - |\n");
             printf("|   DESEJA INCLUIR UM NOVO PRODUTO? (s/n)    |\n");
@@ -1199,17 +941,12 @@ void cadastroProduto()
             scanf(" %c", &confirma);
             fflush(stdin);
 
-            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N')
-            {
+            if (confirma == 's' || confirma == 'S' || confirma == 'n' || confirma == 'N') {
                 break;
             }
-            else
-            {
-                opinvalida();
-            }
+            opinvalida();
         }
-        if ( confirma == 'n' || confirma == 'N')
-        {
+        if ( confirma == 'n' || confirma == 'N') {
             clearScreen();
             break;
         }
@@ -1221,8 +958,7 @@ void cadastroProduto()
 void carregarDadosCategoria()
 {
     arquivoCategoria = fopen("categorias.dat", "rb");
-    if (arquivoCategoria)
-    {
+    if (arquivoCategoria) {
         fread(&numcategorias, sizeof(int), 1, arquivoCategoria);
         categoria = malloc(numcategorias * sizeof(struct CadastroCategoria));
         fread(categoria, sizeof(struct CadastroCategoria), numcategorias, arquivoCategoria);
@@ -1232,19 +968,13 @@ void carregarDadosCategoria()
 //=================================================== FIM CADASTRAR CATEGORIA
 
 
-void carregarDadosCaixa()
-{
+void carregarDadosCaixa() {
     arquivoCaixa = fopen("caixa.dat", "rb");
-    if (arquivoCaixa)
-    {
+    if (arquivoCaixa) {
         fread(&caixa, sizeof(char), 1, arquivoCaixa);
         fread(&inicioCaixa, sizeof(float), 1, arquivoCaixa);
         fclose(arquivoCaixa);
     }
-
-//    printf("  Caixa: %c\n", caixa);
-//    printf("  Abertura de Caixa: %.2f\n", inicioCaixa);
-//    _getch();
 }
 
 
@@ -1253,8 +983,7 @@ void carregarDadosCaixa()
 carregarDadosUsuarios()
 {
     arquivoUsuario = fopen("usuarios.dat", "rb");
-    if (arquivoUsuario)
-    {
+    if (arquivoUsuario) {
         fread(&numusuarios, sizeof(int), 1, arquivoUsuario);
         usuario = malloc(numusuarios * sizeof(struct CadastroUsuario));
         fread(usuario, sizeof(struct CadastroUsuario), numusuarios, arquivoUsuario);
@@ -1265,8 +994,7 @@ carregarDadosUsuarios()
 carregarDadosClientes()
 {
     arquivoCliente = fopen("clientes.dat", "rb");
-    if (arquivoCliente)
-    {
+    if (arquivoCliente) {
         fread(&numClientes, sizeof(int), 1, arquivoCliente);
         cliente = malloc(numClientes * sizeof(struct CadastroCliente));
         fread(cliente, sizeof(struct CadastroCliente), numClientes, arquivoCliente);
@@ -1275,12 +1003,9 @@ carregarDadosClientes()
 }
 
 //PRODUTOS
-carregarDadosProdutos()
-{
-
+carregarDadosProdutos() {
     arquivoProduto = fopen("produtos.dat", "rb");
-    if (arquivoProduto)
-    {
+    if (arquivoProduto) {
         fread(&numProdutos, sizeof(int), 1, arquivoProduto);
         produto = malloc(numProdutos * sizeof(struct CadastroProduto));
         fread(produto, sizeof(struct CadastroProduto), numProdutos, arquivoProduto);
@@ -1288,80 +1013,38 @@ carregarDadosProdutos()
     }
 }
 
-//CAIXA
-/*
-carregarDadosCaixa()
-{
-
-    arquivoCaixa = fopen("caixa.dat", "rb");
-    if (arquivoCaixa)
-    {
-//        fread(&numProdutos, sizeof(int), 1, arquivoCaixa);
-//        produto = malloc(numProdutos * sizeof(struct CadastroProduto));
-        fread(posicaoCaixa, sizeof(struct SituacaoCaixa), 1, arquivoCaixa);
-        fclose(arquivoCaixa);
-    //    caixa=posicaoCaixa->caixa;
-        caixa = posicaoCaixa->caixa;
-        inicioCaixa=posicaoCaixa->inicioCaixa;
-        totalCartao=posicaoCaixa->totalCartao;
-        totalDin=posicaoCaixa->totalDin;
-        vCaixa=posicaoCaixa->vCaixa;
-
-    printf("  Abertura de Caixa: %.2f\n", inicioCaixa);
-    _getch();
-
-    }
-}
-*/
-
 //VENDA
-int carregarDadosVendas(struct CadastroVenda **venda)
-{
+int carregarDadosVendas(struct CadastroVenda **venda) {
     arquivoVenda = fopen("vendas.dat", "rb");
     numVendas = 0;
-    if (arquivoVenda)
-    {
+    if (arquivoVenda) {
         fread(&numVendas, sizeof(int), 1, arquivoVenda);
-//        venda = malloc(numVendas * sizeof(struct CadastroVenda));
-//        fread(venda, sizeof(struct CadastroVenda), numVendas, arquivoVenda);
 
         *venda = (struct CadastroVenda *)malloc(numVendas * sizeof(struct CadastroVenda));
-        if (*venda == NULL)
-        {
+        if (*venda == NULL) {
             perror("Erro ao alocar memória para vendas");
             exit(EXIT_FAILURE);
         }
 
-        for (int i = 0; i < numVendas; i++)
-        {
+        for (int i = 0; i < numVendas; i++) {
             fread(&(*venda)[i], sizeof(struct CadastroVenda) - sizeof(struct ProdutoVenda *), 1, arquivoVenda);
-
-//          printf("| Qtd Itens: %d\n", (*venda)[i].totalProdutos);
-//          _getch();
-
             (*venda)[i].produtos = (struct ProdutoVenda *)malloc((*venda)[i].totalProdutos * sizeof(struct ProdutoVenda));
-            if ((*venda)[i].produtos == NULL)
-            {
+            if ((*venda)[i].produtos == NULL) {
                 perror("Erro ao alocar memória para produtos");
                 exit(EXIT_FAILURE);
             }
             fread((*venda)[i].produtos, sizeof(struct ProdutoVenda), (*venda)[i].totalProdutos, arquivoVenda);
         }
-
         fclose(arquivoVenda);
-
     }
     return numVendas;
 }
 //=================================================== FIM CARREGAR DADOS
 
 //=================================================== MENU DE VENDAS
-void menuVendas()
-{
-
+void menuVendas() {
     int vender=0;
-    while (vender != 4)
-    {
+    while (vender != 4) {
         clearScreen();
         printf("\n|---------------------------------------------|\n");
         printf("|           SISTEMA MERCADO BERE              |\n");
@@ -1378,10 +1061,7 @@ void menuVendas()
         printf("|     (Somente numero)                        |\n");
         printf("|_____________________________________________|\n\n");
         scanf("%d", &vender);
-
-        switch (vender)
-        {
-
+        switch (vender) {
         //nova venda
         case 1:
             novaVenda();
@@ -1391,12 +1071,10 @@ void menuVendas()
         case 2:
            if (tipoUsuario=='1') {
                 Sangria();
-              }
-              else{
-                printf("\n Usuario sem permissao de acesso\n");
-                _getch();
-              }
-            break;
+           } else {
+               printf("\n Usuario sem permissao de acesso\n");
+               getchar();
+           } break;
 
         //pagamento
         case 3:
@@ -1417,25 +1095,17 @@ void menuVendas()
 //=================================================== FIM MENU DE VENDAS
 
 //=================================================== NOVA VENDA
-novaVenda()
-{
-    if (caixa=='F')
-    {
+novaVenda() {
+    if (caixa=='F') {
         caixaFechado();
-    }
-    else
-    {
+    } else {
         int continuarVenda = 1;
-        while (continuarVenda)
-        {
-//        if (numVendas >= INICIAL_MAX_VENDAS) {
+        while (continuarVenda) {
             venda = (struct CadastroVenda *)realloc(venda, (numVendas + 1) * sizeof(struct CadastroVenda));
-            if (venda == NULL)
-            {
+            if (venda == NULL) {
                 perror("Erro ao alocar memoria para vendas");
                 exit(EXIT_FAILURE);
             }
-//        }
             int codcliente;
             struct Data data = obterDataAtual();
 
@@ -1443,8 +1113,7 @@ novaVenda()
             scanf("%d", &codcliente);
 
             indProduto=pesquisaCliente(codcliente);
-            if (indProduto==-1)
-            {
+            if (indProduto==-1) {
                 printf("\nCliente nao cadastrado.\n\n");
                 system("pause");
                 system("cls");
@@ -1459,20 +1128,13 @@ novaVenda()
             adicionarVenda(&venda[numVendas], numVendas+1, codcliente, nomeCliente, data);
 
             int continuarProduto = 1;
-            while (continuarProduto)
-            {
-//            if (venda[numVendas].totalProdutos >= venda[numVendas].maxProdutos) {
-//                venda[numVendas].maxProdutos *= 2;
-//                venda[numVendas].produtos = (struct ProdutoVenda *)realloc(venda[numVendas].produtos, venda[numVendas].maxProdutos * sizeof(struct ProdutoVenda));
+            while (continuarProduto) {
                 venda[numVendas].produtos = (struct ProdutoVenda *)realloc(venda[numVendas].produtos, (venda[numVendas].totalProdutos+1) * sizeof(struct ProdutoVenda));
-//                memset(venda[numVendas].produtos, 0, sizeof(struct ProdutoVenda) * (venda[numVendas].totalProdutos+1));
 
-                if (venda[numVendas].produtos == NULL)
-                {
+                if (venda[numVendas].produtos == NULL) {
                     perror("Erro ao alocar memoria para produtos");
                     exit(EXIT_FAILURE);
                 }
-//            }
 
                 int cod;
                 char descricao[30];
@@ -1483,16 +1145,13 @@ novaVenda()
                 scanf("%d", &cod);
 
                 indProduto=pesquisaItem(cod);
-                if (indProduto==-1)
-                {
+                if (indProduto==-1) {
                     printf("\nProduto nao cadastrado.\n\n");
                     system("pause");
                     system("cls");
                     continue;
                 }
-//            descricao = produto[indProduto].descricao;
                 strncpy(descricao, produto[indProduto].descricao, sizeof(produto[indProduto].descricao) - 1);
-//                precoVenda = truncar(produto[indProduto].precoVenda,2);
                 precoVenda = produto[indProduto].precoVenda;
 
                 printf("\n  Produto Escolhido: %s\n", produto[indProduto].descricao);
@@ -1500,19 +1159,8 @@ novaVenda()
                 printf("  Estoque Atual: %d\n", produto[indProduto].estoque);
                 printf("  Estoque Minimo do Produto: %d\n", produto[indProduto].estoqueminimo);
                 printf("\n| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |\n");
-
-//            printf("Digite a descrição do produto: ");
-//            scanf(" %[^\n]", descricao);
-
                 printf("Digite a quantidade: ");
                 scanf("%d", &quantidade);
-//            printf("Digite o preço de venda: ");
-//            scanf("%f", &precoVenda);
-
-  //  printf("Mostra preco: %.f\n", venda[numVendas].produtos[0].precoVenda);
-//    printf("Mostra preco1: %.2f\n", precoVenda);
-
-//                adicionarProduto(&venda[numVendas].produtos[venda[numVendas].totalProdutos], numVendas+1, cod, descricao, quantidade, precoVenda);
 
                 venda[numVendas].produtos[venda[numVendas].totalProdutos].num = numVendas+1;
                 venda[numVendas].produtos[venda[numVendas].totalProdutos].cod = cod;
@@ -1535,11 +1183,7 @@ novaVenda()
                 printf("Deseja adicionar outro produto? (1-Sim, 0-Nao): ");
                 scanf("%d", &continuarProduto);
             }
-
             numVendas++;
-
-//            printf("Deseja adicionar outra venda? (1-Sim, 0-Nao): ");
-//            scanf("%d", &continuarVenda);
             continuarVenda = 0;
         }
     }
@@ -1548,20 +1192,14 @@ novaVenda()
 
 
 
-novaVendaBruno()
-{
-    if (caixa=='F')
-    {
+novaVendaBruno() {
+    if (caixa=='F') {
         caixaFechado();
-    }
-    else
-    {
+    } else {
         int continuarVenda = 1;
-        while (continuarVenda!=0)
-        {
+        while (continuarVenda!=0) {
             venda = (struct CadastroVenda *)realloc(venda, (numVendas + 1) * sizeof(struct CadastroVenda));
-            if (venda == NULL)
-            {
+            if (venda == NULL) {
                 perror("Erro ao alocar memoria para vendas");
                 exit(EXIT_FAILURE);
             }
@@ -1576,10 +1214,9 @@ novaVendaBruno()
             scanf("%d", &codcliente);
 
             indProduto=pesquisaCliente(codcliente);
-            if (indProduto==-1)
-            {
+            if (indProduto==-1) {
                 printf("\n  Cliente nao cadastrado.\n\n");
-                _getch();
+                getchar();
                 clearScreen();
                 continue;
             }
@@ -1594,8 +1231,7 @@ novaVendaBruno()
 
             venda[numVendas].produtos = (struct ProdutoVenda *)realloc(venda[numVendas].produtos, (venda[numVendas].totalProdutos+1) * sizeof(struct ProdutoVenda));
 
-            if (venda[numVendas].produtos == NULL)
-            {
+            if (venda[numVendas].produtos == NULL) {
                 perror("  Erro ao alocar memoria para produtos");
                 exit(EXIT_FAILURE);
             }
@@ -1612,15 +1248,13 @@ novaVendaBruno()
             scanf("%d", &cod);
 
             indProduto=pesquisaItem(cod);
-            if (indProduto==-1)
-            {
+            if (indProduto==-1) {
                 printf("\n  Produto nao cadastrado.\n\n");
-                _getch();
+                getchar();
                 clearScreen();
                 break;
             }
             strncpy(descricao, produto[indProduto].descricao, sizeof(produto[indProduto].descricao) - 1);
-//                precoVenda = truncar(produto[indProduto].precoVenda,2);
             precoVenda = produto[indProduto].precoVenda;
 
             printf("\n  Produto Escolhido: %s\n", produto[indProduto].descricao);
@@ -1631,132 +1265,71 @@ novaVendaBruno()
             printf("\n  Digite a quantidade desejada: ");
             scanf("%d", &quantidade);
 
-            if ((produto[indProduto].estoque-quantidade)<=0)
-            {
+            if (produto[indProduto].estoque-quantidade<=0) {
                 clearScreen();
                 printf("\n|------------------------------------------------------------------------------|");
                 printf("\n|  COMPRA MAIOR DO QUE ESTOQUE EXISTENTE, FAVOR ESCOHER UMA QUANTIDADE MENOR.  |");
                 printf("\n|------------------------------------------------------------------------------|\n\n");
-                _getch();
-            }
-            else
-            {
-                if (quantidade<=0)
-                {
+                getchar();
+            } else {
+                if (quantidade<=0) {
                     clearScreen();
                     printf("\n|------------------------------------------------------|");
                     printf("\n|  QUANTIDADE ESCOLHIDA IMPOSSIVEL, TENTE NOVAMENTE.   |");
                     printf("\n|------------------------------------------------------|\n\n");
-                    _getch();
-                }
-
-                else
-                {
-                    if ((produto[indProduto].estoque-quantidade)<produto[indProduto].estoqueminimo)
-                    {
+                    getchar();
+                } else {
+                    if (produto[indProduto].estoque-quantidade<produto[indProduto].estoqueminimo) {
                         clearScreen();
                         printf("\n|----------------------------------------------------------------------|");
                         printf("\n|  ATENCAO! ESTOQUE MINIMO DE %d ULTRAPASSADO, FAVOR ESCOLHER           |", produto[indProduto].estoqueminimo);
                         printf("\n|  OUTRO ITEM, OU UMA QUANTIA MENOR.                                   |");
                         printf("\n|----------------------------------------------------------------------|\n\n");
-                        _getch();
-                    }
-                    else{
-                    if ((produto[indProduto].estoque-quantidade)==produto[indProduto].estoqueminimo)
-                    {
+                        getchar();
+                    } else {
+                    if ((produto[indProduto].estoque-quantidade)==produto[indProduto].estoqueminimo) {
                         clearScreen();
                         printf("\n|-------------------------------------------|");
                         printf("\n|  ATENCAO! ESTOQUE MINIMO DE %d ATINGIDO.  |", produto[indProduto].estoqueminimo);
                         printf("\n|-------------------------------------------|\n\n");
-                        _getch();
+                        getchar();
                     }
 
-         //           if(((produto[indProduto].estoque-quantidade)>=produto[indProduto].estoqueminimo)&(quantidade>=1))
-         //           {
-                        venda[numVendas].produtos[venda[numVendas].totalProdutos].num = numVendas+1;
-                        venda[numVendas].produtos[venda[numVendas].totalProdutos].cod = cod;
-                        strncpy(venda[numVendas].produtos[venda[numVendas].totalProdutos].descricao, descricao, sizeof(venda[numVendas].produtos[venda[numVendas].totalProdutos].descricao) - 1);
-                        venda[numVendas].produtos[venda[numVendas].totalProdutos].descricao[sizeof(produto->descricao) - 1] = '\0';
-                        venda[numVendas].produtos[venda[numVendas].totalProdutos].quantidade = quantidade;
-                        venda[numVendas].produtos[venda[numVendas].totalProdutos].precoVenda = precoVenda;
-                        venda[numVendas].produtos[venda[numVendas].totalProdutos].valorTotal = quantidade*precoVenda;
-                        venda[numVendas].valorTotal += quantidade * precoVenda;
-                        venda[numVendas].totalProdutos++;
-                        produto[indProduto].estoque-=quantidade;
-                        totalBruto+=venda[numVendas].valorTotal;
-                        numVendas++;
-                        vendasRealizadas=numVendas;
+                    venda[numVendas].produtos[venda[numVendas].totalProdutos].num = numVendas+1;
+                    venda[numVendas].produtos[venda[numVendas].totalProdutos].cod = cod;
+                    strncpy(venda[numVendas].produtos[venda[numVendas].totalProdutos].descricao, descricao, sizeof(venda[numVendas].produtos[venda[numVendas].totalProdutos].descricao) - 1);
+                    venda[numVendas].produtos[venda[numVendas].totalProdutos].descricao[sizeof(produto->descricao) - 1] = '\0';
+                    venda[numVendas].produtos[venda[numVendas].totalProdutos].quantidade = quantidade;
+                    venda[numVendas].produtos[venda[numVendas].totalProdutos].precoVenda = precoVenda;
+                    venda[numVendas].produtos[venda[numVendas].totalProdutos].valorTotal = quantidade*precoVenda;
+                    venda[numVendas].valorTotal += quantidade * precoVenda;
+                    venda[numVendas].totalProdutos++;
+                    produto[indProduto].estoque-=quantidade;
+                    totalBruto+=venda[numVendas].valorTotal;
+                    numVendas++;
+                    vendasRealizadas=numVendas;
 
-                        printf("\n   TOTAL NO CARRINHO: %.2f\n\n", totalBruto);
-                        _getch();
-           //         }
-
-
-            /*int salvar;
-            while((salvar!=1)||(salvar!=0))
-            {
-                clearScreen();
-                printf("\n|---------------------------------|");
-                printf("\n|  SALVAR VENDA? (1-Sim, 0-Nao)   |");
-                printf("\n|---------------------------------|\n\n");
-                scanf("%d", &salvar);
-
-                if (salvar==1)
-                {
-                    printf("\n - Venda salva com sucesso.\n\n");
-                    arquivoVenda = fopen("vendas.dat", "wb");
-                    fwrite(&numVendas, sizeof(int), 1, arquivoVenda);
-                    for (int i = 0; i < numVendas; i++)
-                    {
-                        fwrite(&venda[i], sizeof(struct CadastroVenda) - sizeof(struct ProdutoVenda *), 1, arquivoVenda);
-                        fwrite(venda[i].produtos, sizeof(struct ProdutoVenda), venda[i].totalProdutos, arquivoVenda);
-                    }
-                    fclose(arquivoVenda);
-                    _getch();
-                    break;
+                    printf("\n   TOTAL NO CARRINHO: %.2f\n\n", totalBruto);
+                    getchar();
                 }
-                else
-                {
-                    if(salvar==0)
-                    {
-                        printf("\n - Venda nao salva.\n\n");
-                        _getch();
-                        break;
-                    }
-                    else
-                    {
-                        opinvalida();
-                    }
-                }
-            }*/
             }
-            }
-            }
+        }
 
-            clearScreen();
-            printf("\n|--------------------------------------------|");
-            printf("\n|  ADICIONAR OUTRO PRODUTO? (1-Sim, 0-Nao)   |");
-            printf("\n|--------------------------------------------|\n\n");
-            scanf("%d", &continuarProduto);
+        clearScreen();
+        printf("\n|--------------------------------------------|");
+        printf("\n|  ADICIONAR OUTRO PRODUTO? (1-Sim, 0-Nao)   |");
+        printf("\n|--------------------------------------------|\n\n");
+        scanf("%d", &continuarProduto);
 
-            if (continuarProduto==1)
-            {
-                continue;
-            }
-            else
-            {
-              if(continuarProduto==0)
-              {
-                break;
-              }
-              else
-              {
-                opinvalida();
-              }
-            }
+        if (continuarProduto==1) {
+            continue;
+        }
 
-
-        }  // End produtos
+        if(continuarProduto==0) {
+            break;
+        }
+        opinvalida();
+    }  // End produtos
 
             clearScreen();
             printf("\n|--------------------------------------------|");
@@ -1764,26 +1337,15 @@ novaVendaBruno()
             printf("\n|--------------------------------------------|\n\n");
             scanf("%d", &continuarVenda);
 
-            if (continuarVenda==1)
-            {
+            if (continuarVenda==1) {
                 continue;
             }
-            else
-            {
-              if(continuarVenda==0)
-              {
+            if(continuarVenda==0) {
                 break;
-              }
-              else
-              {
-                opinvalida();
-              }
             }
-
+            opinvalida();
         } // End vendas  
     }
-
-
 }
 
 //=================================================== FIM NOVA VENDA
@@ -1802,7 +1364,7 @@ void Sangria()
             printf("\n|---------------------------------------|\n");
             printf("|  O CAIXA ESTA COM MENOS DE R$ 50.00.  |\n");
             printf("|---------------------------------------|\n");
-            _getch();
+            getchar();
         }
         else
         {
@@ -1818,7 +1380,7 @@ void Sangria()
             if (retirada==0)
             {
                 printf("\n  NADA FOI RETIRADO, SEU CAIXA CONTINUA COM R$ %.2f\n", vCaixa);
-                _getch();
+                getchar();
             }
             else
             {
@@ -1827,14 +1389,14 @@ void Sangria()
                     printf("\n|---------------------------------------------------------------|\n");
                     printf("|  O CAIXA  FICARA COM MENOS DE R$ 50.00, SAQUE IMPOSSIVEL...    |\n");
                     printf("|----------------------------------------------------------------|\n");
-                    _getch();
+                    getchar();
                 }
 
                 if ((vCaixa-retirada)>=50)
                 {
                     vCaixa=vCaixa-retirada;
                     printf("  DINHEIRO RETIRADO, SEU CAIXA AGORA ESTA COM R$ %.2f\n", vCaixa);
-                    _getch();
+                    getchar();
                 }
             }
         }
@@ -1855,7 +1417,7 @@ void pagamento()
         printf("|                                               |\n");
         printf("|  VOLTANDO PARA O MENU ANTERIOR...             |\n");
         printf("|-----------------------------------------------| \n\n");
-        _getch();
+        getchar();
         clearScreen();
     }
     else
@@ -1896,7 +1458,7 @@ void pagamento()
                         printf("\n|------------------------------------------------------------|\n");
                         printf("|  NAO E POSSIVEL REALIZAR ESTE DESCONTO, TENTE NOVAMENTE.   |\n");
                         printf("|------------------------------------------------------------|\n\n");
-                        _getch();
+                        getchar();
                         clearScreen();
                     }
                     }
@@ -1929,7 +1491,7 @@ void pagamento()
                             printf("  TROCO A PAGAR: R$ %.2f                        \n", troco);
                             printf("|------------------------------------------------|\n\n");
                             pagoDin=totalDesc;
-                            _getch();
+                            getchar();
                             clearScreen();
                         }
 
@@ -1939,7 +1501,7 @@ void pagamento()
                             printf("|  PAGAMENTO REALIZADO COM SUCESSO,               |\n");
                             printf("|  VOLTANDO PARA O MENU PRINCIPAL...              |\n");
                             printf("|-------------------------------------------------| \n\n");
-                            _getch();
+                            getchar();
                             clearScreen();
                             if (totalBruto-desconto==pagoDin)
                             {
@@ -1968,7 +1530,7 @@ void pagamento()
                                 pagoDin=0;
                                 pagoCartao=0;
                                 loopDesconto=0;
-                            }
+                                }
                             }
                         }
 
@@ -2037,7 +1599,7 @@ void pagamento()
                             printf("|  PAGAMENTO REALIZADO COM SUCESSO,               |\n");
                             printf("|  VOLTANDO PARA O MENU PRINCIPAL...              |\n");
                             printf("|-------------------------------------------------| \n\n");
-                            _getch();
+                            getchar();
                             clearScreen();
 
                             if (totalBruto-desconto==pagoCartao)
@@ -2116,7 +1678,7 @@ void pagamento()
                             printf("|  PAGAMENTO MAIOR QUE O TOTAL A PAGAR, FAVOR TENTE            |\n");
                             printf("|  REALIZAR O PAGAMENTO NOVAMENTE...                           |\n");
                             printf("|--------------------------------------------------------------| \n\n");
-                            _getch();
+                            getchar();
                             clearScreen();
                         }
                     }
@@ -2188,8 +1750,6 @@ void aberturaCaixa()
                 fwrite(&caixa, sizeof(char), 1, arquivoCaixa);
                 fwrite(&inicioCaixa, sizeof(float), 1, arquivoCaixa);
                 fclose(arquivoCaixa);
-     //             printf("Caixa: %c\n", caixa);
-     //              _getch();
 
                 clearScreen();
                 break;
@@ -2219,7 +1779,7 @@ void caixaAberto()
     printf("\n|------------------------------------|\n");
     printf("|         CAIXA ABERTO...            |\n");
     printf("|------------------------------------|\n\n");
-    _getch();
+    getchar();
     clearScreen();
 }
 
@@ -2235,7 +1795,7 @@ void fechamentoCaixa()
         printf("\n|------------------------------------------------|\n");
         printf("|  CONCLUA O PAGAMENTO PARA FECHAR O CAIXA...    |\n");
         printf("|------------------------------------------------| \n\n");
-        _getch();
+        getchar();
         clearScreen();
     }
 
@@ -2313,7 +1873,7 @@ void caixaFechado()
     printf("\n|------------------------------------|\n");
     printf("|           CAIXA FECHADO..          |\n");
     printf("|------------------------------------|\n\n");
-    _getch();
+    getchar();
     clearScreen();
 }
 //=================================================== FIM FECHAMENTO DE CAIXA
@@ -2525,7 +2085,7 @@ void listaClientes()
             }
             printf("|------------------------------------------------------------|\n");
             printf("| - - - - - - - - FIM DA LISTA DE CLIENTES - - - - - - - - - |\n\n");
-            _getch();
+            getchar();
             break;
 
         //clientes em ordem alfabetica
@@ -2550,7 +2110,7 @@ void listaClientes()
             }
             printf("|------------------------------------------------------------|\n");
             printf("| - - - - - - - - FIM DA LISTA DE CLIENTES - - - - - - - - - |\n\n");
-            _getch();
+            getchar();
             break;
 
         //clientes que compraram em determinado periodo
@@ -2677,7 +2237,7 @@ void listaProdutos()
             }
             printf("|------------------------------------------------------------|\n");
             printf("| - - - - - - - - FIM DA LISTA DE PRODUTOS - - - - - - - - - |\n\n");
-            _getch();
+            getchar();
             break;
 
         //produto em ordem alfabetica
@@ -2700,7 +2260,7 @@ void listaProdutos()
             }
             printf("|------------------------------------------------------------|\n");
             printf("| - - - - - - - - FIM DA LISTA DE PRODUTOS - - - - - - - - - |\n\n");
-            _getch();
+            getchar();
             break;
 
         //produtos sem estoque ou estoque minimo
@@ -2724,7 +2284,7 @@ void listaProdutos()
             }
             printf("|------------------------------------------------------------|\n");
             printf("| - - - - - - - - FIM DA LISTA DE PRODUTOS - - - - - - - - - |\n\n");
-            _getch();
+            getchar();
             break;
 
         //produtos mais vendidos
@@ -2826,7 +2386,7 @@ void listaVendas()
             printf("|------------------------------------------------------------|\n");
             printf("|- - - - - - - - - FIM DA LISTA DE VENDAS - - - - - - - - - -|\n\n");
 
-            _getch();
+            getchar();
             break;
 
         //vendas em determinado periodo
@@ -2966,7 +2526,7 @@ void opinvalida()
     printf("\n|----------------------------------------------------|\n");
     printf("|  OPCAO INVALIDA! FAVOR INSERIR UM VALOR VALIDO...  |\n");
     printf("|----------------------------------------------------| \n\n");
-    _getch();
+    getchar();
     clearScreen();
 }
 
@@ -2976,7 +2536,7 @@ void voltar()
     printf("\n|------------------------------------|\n");
     printf("|  VOLTANDO PARA O MENU ANTERIOR...  |\n");
     printf("|------------------------------------|\n\n");
-    _getch();
+    getchar();
     clearScreen();
 }
 
@@ -3033,7 +2593,7 @@ void main()
         
         if (numusuarios==0){
           printf("\n Nao existem usuarios cadastrados, redirecionando para o cadastro de usuarios...");
-          _getch();
+          getchar();
         
           cadastroUsuario();
         }
@@ -3069,7 +2629,7 @@ void main()
             }
             if (strcmp(nomeUsuario, " ") == 0) {
                  printf("\n Usuario e/ou senha nao cadastrados");
-                 _getch();
+                 getchar();
             }
             else
             {
@@ -3112,7 +2672,7 @@ void main()
                 }
                 else{
                  printf("\n Usuario sem permissao de acesso\n");
-                 _getch();
+                 getchar();
                 }
             }
             break;
@@ -3133,7 +2693,7 @@ void main()
               }
               else{
                 printf("\n Usuario sem permissao de acesso\n");
-                _getch();
+                getchar();
               }   
             }
             break;

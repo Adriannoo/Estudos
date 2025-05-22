@@ -107,7 +107,7 @@ struct SituacaoCaixa{
 
 
 //função que impede letras onde pede-se números
-bool validaNumero(char *numero, int tamanho){
+bool validaNumero(const char *numero, int tamanho){
     if (numero==NULL){
         return false;
     }
@@ -125,7 +125,7 @@ bool validaNumero(char *numero, int tamanho){
 }
 
 //função que impede mandar espaço vazio
-bool validacaracter(char *caracter){
+bool validacaracter(const char *caracter){
     int len = strlen(caracter);
     if (len == 0){
         return false;
@@ -1582,7 +1582,4 @@ void main(){
     // Liberação de memória
     free(cliente);
     free(produto);
-    //free(vendas);
-    //free(pagamentos);
-
 }
