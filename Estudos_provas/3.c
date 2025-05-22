@@ -79,6 +79,8 @@
 //     }
 //     printf("\nQuantidade de pares: %d", pares);
 //     printf("\nQuantidade de impares: %d", impares);
+//
+//     return 0;
 // }
 //======================================================================================================================
 
@@ -108,32 +110,68 @@
 //         printf("\n");
 //     }
 //     printf("\nA soma dos elementos da Matriz e: %d", soma);
+//
+//     return 0;
 // }
 
 
 // === 2. Médio: Leia uma matriz 4x4 e imprima a soma dos elementos da diagonal principal. ===
-#define MAX 4
+// #define MAX 4
+//
+// int main() {
+//     int matriz[MAX][MAX];
+//     int soma_diagonal = 0;
+//
+//     for (int i = 0; i < MAX; i++) {
+//         for (int j = 0; j < MAX; j++) {
+//             printf("Digite o elemento [%d][%d]: ", i + 1, j + 1);
+//             scanf("%d", &matriz[i][j]);
+//             while (getchar() != '\n'){} // Limpa o buffer do teclado
+//             if (i == j) { // Verifica se o elemento está na diagonal principal
+//                 soma_diagonal += matriz[i][j]; // Soma os elementos da diagonal principal
+//             }
+//         }
+//     }
+//     printf("Matriz informada: \n");
+//     for (int i = 0; i < MAX; i++) {
+//         for (int j = 0; j < MAX; j++) {
+//             printf("%d  ", matriz[i][j]);
+//         }
+//         printf("\n");
+//     }
+//     printf("\n A soma da diagonal principal e: %d", soma_diagonal);
+//
+//     return 0;
+// }
+//======================================================================================================================
+
+// =================================================== -- PONTEIRO -- ==================================================
+// === 1. Fácil: Crie uma função que receba dois inteiros por ponteiro e troque seus valores. ===
+
+void troca_num(int *ptr1, int *ptr2) {
+    const int temp = *ptr1;
+
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
 
 int main() {
-    int matriz[MAX][MAX];
-    int soma_diagonal = 0;
+    int num1, num2;
+    int *ptr1 = &num1;
+    int *ptr2 = &num2;
 
-    for (int i = 0; i < MAX; i++) {
-        for (int j = 0; j < MAX; j++) {
-            printf("Digite o elemento [%d][%d]: ", i + 1, j + 1);
-            scanf("%d", &matriz[i][j]);
-            while (getchar() != '\n'){} // Limpa o buffer do teclado
-            if (i == j) { // Verifica se o elemento está na diagonal principal
-                soma_diagonal += matriz[i][j]; // Soma os elementos da diagonal principal
-            }
-        }
-    }
-    printf("Matriz informada: \n");
-    for (int i = 0; i < MAX; i++) {
-        for (int j = 0; j < MAX; j++) {
-            printf("%d  ", matriz[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n A soma da diagonal principal e: %d", soma_diagonal);
+    printf("Digite o primeiro numero: ");
+    scanf("%d", ptr1);
+    while (getchar() != '\n'){} // Limpa o buffer do teclado
+
+    printf("Digite o segundo numero: ");
+    scanf("%d", ptr2);
+    while (getchar() != '\n'){} // Limpa o buffer do teclado
+
+    printf("Antes da troca: num1 = %d, num2 = %d\n", *ptr1, *ptr2);
+
+    troca_num(ptr1, ptr2);
+
+    printf("Apos a troca: num1 = %d, num2 = %d\n", *ptr1, *ptr2);
+    return 0;
 }
