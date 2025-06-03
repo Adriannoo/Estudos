@@ -147,31 +147,113 @@
 
 // =================================================== -- PONTEIRO -- ==================================================
 // === 1. Fácil: Crie uma função que receba dois inteiros por ponteiro e troque seus valores. ===
+// void troca_num(int *ptr1, int *ptr2) {
+//     const int temp = *ptr1;
+//
+//     *ptr1 = *ptr2;
+//     *ptr2 = temp;
+// }
+//
+// int soma_num(const int *ptr1, const int *ptr2) {
+//     return *ptr1 + *ptr2;
+// }
+//
+// int main() {
+//     int num1, num2;
+//     int *ptr1 = &num1;
+//     int *ptr2 = &num2;
+//
+//     printf("Digite o primeiro numero: ");
+//     scanf("%d", ptr1);
+//     while (getchar() != '\n'){} // Limpa o buffer do teclado
+//
+//     printf("Digite o segundo numero: ");
+//     scanf("%d", ptr2);
+//     while (getchar() != '\n'){} // Limpa o buffer do teclado
+//
+//     printf("Antes da troca: num1 = %d, num2 = %d\n", *ptr1, *ptr2);
+//
+//     troca_num(ptr1, ptr2);
+//
+//     printf("Apos a troca com ponteiro: num1 = %d, num2 = %d\n", *ptr1, *ptr2);
+//
+//     printf("Soma com ponteiro: %d\n", soma_num(ptr1, ptr2));
+//     return 0;
+// }
 
-void troca_num(int *ptr1, int *ptr2) {
-    const int temp = *ptr1;
 
-    *ptr1 = *ptr2;
-    *ptr2 = temp;
+// === 2. Médio: Crie um array de 5 inteiros, preencha com valores, e use ponteiros para imprimir cada elemento multiplicado por 2. ===
+// #define MAX 5
+//
+// int main() {
+//     int array_nums[MAX];
+//
+//     int *ptr = array_nums; // Ponteiro para o array
+//
+//     for (int i = 0; i < MAX; i++) {
+//         printf("Digite o %d numero: ", i + 1);
+//         scanf("%d", &array_nums[i]);
+//         while (getchar() != '\n'){}
+//     }
+//
+//     printf("\nNumeros digitados: ");
+//     for (int i = 0; i < MAX; i++) {
+//         printf("%d ", array_nums[i]);
+//     }
+//
+//     printf("\nImprimindo numeros com ponteiro e multiplicando por x2: ");
+//     for (int i = 0; i < MAX; i++) {
+//         printf("%d ", ptr[i] * 2);
+//     }
+//
+//     return 0;
+// }
+//======================================================================================================================
+
+// ================================================== -- RECURSAO -- ===================================================
+// === 1. Fácil: Implemente uma função recursiva para calcular o fatorial de um número. ===
+// int fatorial(int num);
+//
+// int fatorial(int num) {
+//     if (num == 0 || num == 1) {
+//         return 1;
+//     }
+//     return num * fatorial(num - 1);
+// }
+//
+// int main() {
+//     int num = 0;
+//
+//     printf("Digite um numero inteiro para fatorial: ");
+//     scanf("%d", &num);
+//     while (getchar() != '\n'){}
+//
+//     printf("Fatorial de %d = %d\n", num, fatorial(num));
+//
+//     return 0;
+// }
+
+
+// === 2. Fácil: Implemente uma função recursiva para imprimir os números de 1 até N. ===
+int imprimir_numeros(int num);
+
+int imprimir_numeros(int num) {
+    if (num <= 0 || num == 1) {
+        return printf("1, ");
+    }
+
+    imprimir_numeros(num - 1);
+    return printf("%d, ", num);
 }
 
 int main() {
-    int num1, num2;
-    int *ptr1 = &num1;
-    int *ptr2 = &num2;
+    int numero = 0;
 
-    printf("Digite o primeiro numero: ");
-    scanf("%d", ptr1);
-    while (getchar() != '\n'){} // Limpa o buffer do teclado
+    printf("Digite um numero inteiro limite para contar de 1 ate N: ");
+    scanf("%d", &numero);
+    while (getchar() != '\n'){}
 
-    printf("Digite o segundo numero: ");
-    scanf("%d", ptr2);
-    while (getchar() != '\n'){} // Limpa o buffer do teclado
+    imprimir_numeros(numero);
 
-    printf("Antes da troca: num1 = %d, num2 = %d\n", *ptr1, *ptr2);
-
-    troca_num(ptr1, ptr2);
-
-    printf("Apos a troca: num1 = %d, num2 = %d\n", *ptr1, *ptr2);
     return 0;
 }
