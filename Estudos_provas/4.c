@@ -81,7 +81,7 @@ Cada bloco abaixo contém 10 exercícios de cada conteúdo, com enunciado e dica
 // Exercício 6.2: Implemente o Bubble Sort para ordenar um vetor de floats.
 // Exercício 6.3: Implemente o Bubble Sort para ordenar um vetor de strings.
 // Exercício 6.4: Implemente o Bubble Sort para ordenar um vetor de structs Aluno por nota.
-// Exerc��cio 6.5: Implemente o Bubble Sort para ordenar um vetor de structs Aluno por nome.
+// Exercicio 6.5: Implemente o Bubble Sort para ordenar um vetor de structs Aluno por nome.
 // Exercício 6.6: Implemente uma função que conta o número de trocas feitas pelo Bubble Sort.
 // Exercício 6.7: Implemente uma função que verifica se o vetor está ordenado após o Bubble Sort.
 // Exercício 6.8: Implemente o Bubble Sort recursivo.
@@ -132,6 +132,7 @@ int main() {
 
 // 1.4 Copie o conteúdo de um arquivo para outro.
 
+/*
 #define MAX 50
 
 int main() {
@@ -171,3 +172,121 @@ int main() {
 
     return 0;
 }
+*/
+
+// 1.5 Grave 10 números inteiros em um arquivo binário.
+// 1.6 Leia 10 números inteiros de um arquivo binário e imprima-os.
+/*
+#define MAX 10 // Define o numero maximo de numeros
+
+int main() {
+    FILE *arquivo = fopen("Arquivos/exercicio1_5.dat", "wb"); // Cria o arquivo binario para escrita e abre
+    if (arquivo == NULL) { // Verifica se o arquivo foi aberto corretamente
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+
+    int numeros[MAX], numeros_lidos[MAX]; // Arrays para armazenar os numeros a serem escritos e lidos
+
+    for (int i = 0; i < MAX; i++) {
+        printf("Digite o %d numero inteiro: ", i + 1); // Loop para ler 10 numeros inteiros
+        scanf("%d", &numeros[i]);
+        while (getchar() != '\n');
+    }
+    // 1 - variavel, 2 - tamanho do tipo, 3 - quantidade de elementos, 4 - arquivo
+    fwrite(numeros, sizeof(int), MAX, arquivo); // Funcao "fwrite" para escrever os numeros no arquivo binario
+    fclose(arquivo); // Fecha o arquivo após a escrita
+
+    arquivo = fopen("Arquivos/exercicio1_5.dat", "rb"); // Reabre o arquivo binario para leitura
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura!\n"); // Verificacao
+        return 1;
+    }
+
+    // 1 - variavel, 2 - tamanho do tipo, 3 - quantidade de elementos, 4 - arquivo
+    fread(numeros_lidos, sizeof(int), MAX, arquivo); // Funcao "fread" para ler os numeros do arquivo binario
+    // Le os numeros do arquivo binario e armazena no array numeros_lidos
+
+    printf("\nConteudo lido do arquivo binário\n");
+
+    for (int i = 0; i < MAX; i++) {
+        printf("%d ", numeros_lidos[i]); // Loop para imprimir os numeros lidos do arquivo binario
+    }
+
+    fclose(arquivo); // Fecha o arquivo após a leitura
+    return 0;
+}
+*/
+
+// 1.7 Escreva um programa que adicione uma linha ao final de um arquivo texto.
+/*
+#define MAX 50
+
+int main() {
+    FILE *arquivo = fopen("Arquivos/exercicio1_7.txt", "a"); // Abre o arquivo em modo de adição
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+
+    char texto[MAX];
+    printf("Digite um texto a ser adicionado ao arquivo: ");
+    fgets(texto, MAX, stdin);
+    fprintf(arquivo, "%s", texto); // Adiciona o texto ao final do arquivo
+
+    printf("\nTexto adicionado com sucesso!\n");
+
+    fclose(arquivo);
+}
+*/
+
+// 1.8 Leia um arquivo texto e conte quantas vezes a letra 'a' aparece.
+/*
+#define MAX 50
+
+int main() {
+    FILE *arquivo = fopen("Arquivos/exercicio1_8.txt", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        return 1;
+    }
+
+    char texto[MAX];
+    int contador = 0, c = 0; // C Variavel auxiliar para armazenar o caractere lido
+    printf("Digite um texto para contar as letras (a) (maximo %d caracteres): ", MAX - 1);
+    fgets(texto, MAX, stdin);
+    fprintf(arquivo, "%s", texto); // Grava o texto no arquivo
+    fclose(arquivo);
+
+    arquivo = fopen("Arquivos/exercicio1_8.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura!\n");
+        return 1;
+    }
+
+    // File Get Character
+    while ((c = fgetc(arquivo)) != EOF) { // Loop enquanto nao chegar no final do arquivo
+        if (c == 'a' || c == 'A') { // Verifica se o caractere lido é 'a' ou 'A'
+            contador++;
+        }
+    }
+    printf("\nA letra 'a' aparece %d vezes no arquivo.\n", contador);
+    fclose(arquivo);
+
+    return 0;
+}
+*/
+
+// 1.9 Escreva um programa que apague o conteúdo de um arquivo texto.
+
+#define MAX 50
+
+FILE *arquivo;
+
+
+void apagar_arquivo(){}
+
+int main() {
+
+}
+
