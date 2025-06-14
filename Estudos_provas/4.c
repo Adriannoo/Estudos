@@ -1,1 +1,173 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+/*
+Exercícios de revisão para prova - Conteúdos e dificuldades:
+
+1. Arquivos (Fácil)
+2. Alocação Dinâmica (Fácil)
+3. Recursão (Médio)
+4. Ponteiros (Médio)
+5. Lista Ligada (Extremo)
+6. Ordenação (Bubble Sort) (Difícil)
+
+Cada bloco abaixo contém 10 exercícios de cada conteúdo, com enunciado e dicas.
+*/
+
+// 1. ARQUIVOS (FÁCIL)
+// Exercício 1.1: Escreva um programa que crie um arquivo texto e grave a frase "Olá, Arquivos!".
+// Exercício 1.2: Leia um arquivo texto e imprima seu conteúdo na tela.
+// Exercício 1.3: Conte o número de linhas de um arquivo texto.
+// Exercício 1.4: Copie o conteúdo de um arquivo para outro.
+// Exercício 1.5: Grave 10 números inteiros em um arquivo binário.
+// Exercício 1.6: Leia 10 números inteiros de um arquivo binário e imprima-os.
+// Exercício 1.7: Escreva um programa que adicione uma linha ao final de um arquivo texto.
+// Exercício 1.8: Leia um arquivo texto e conte quantas vezes a letra 'a' aparece.
+// Exercício 1.9: Escreva um programa que apague o conteúdo de um arquivo texto.
+// Exercício 1.10: Escreva um programa que leia nomes de um arquivo e imprima apenas os que começam com 'A'.
+
+// 2. ALOCAÇÃO DINÂMICA (FÁCIL)
+// Exercício 2.1: Alocar dinamicamente um vetor de 5 inteiros e ler seus valores.
+// Exercício 2.2: Alocar dinamicamente uma matriz 3x3 de floats e preencher com valores do usuário.
+// Exercício 2.3: Redimensionar um vetor de inteiros de tamanho 5 para 10 usando realloc.
+// Exercício 2.4: Liberar corretamente a memória de um vetor alocado dinamicamente.
+// Exercício 2.5: Criar uma struct Aluno e alocar dinamicamente um array de 3 alunos.
+// Exercício 2.6: Ler uma string de tamanho desconhecido usando malloc e realloc.
+// Exercício 2.7: Alocar dinamicamente um vetor de ponteiros para strings.
+// Exercício 2.8: Criar uma função que recebe um ponteiro para int e aloca memória para N inteiros.
+// Exercício 2.9: Escrever uma função que retorna um ponteiro para um vetor de floats alocado dinamicamente.
+// Exercício 2.10: Escrever um programa que soma dois vetores alocados dinamicamente.
+
+// 3. RECURSÃO (MÉDIO)
+// Exercício 3.1: Função recursiva para calcular o fatorial de um número.
+// Exercício 3.2: Função recursiva para calcular o n-ésimo termo da sequência de Fibonacci.
+// Exercício 3.3: Função recursiva para imprimir um vetor de trás para frente.
+// Exercício 3.4: Função recursiva para somar os elementos de um vetor.
+// Exercício 3.5: Função recursiva para inverter uma string.
+// Exercício 3.6: Função recursiva para contar dígitos de um número inteiro.
+// Exercício 3.7: Função recursiva para calcular a soma dos dígitos de um número.
+// Exercício 3.8: Função recursiva para encontrar o maior elemento de um vetor.
+// Exercício 3.9: Função recursiva para verificar se uma string é palíndromo.
+// Exercício 3.10: Função recursiva para calcular a potência (base^expoente).
+
+// 4. PONTEIROS (MÉDIO)
+// Exercício 4.1: Escreva um programa que use um ponteiro para modificar o valor de uma variável.
+// Exercício 4.2: Escreva uma função que recebe um ponteiro para int e dobra o valor.
+// Exercício 4.3: Escreva uma função que troca o valor de dois inteiros usando ponteiros.
+// Exercício 4.4: Escreva um programa que imprime o endereço de uma variável.
+// Exercício 4.5: Escreva um programa que usa ponteiro para acessar elementos de um vetor.
+// Exercício 4.6: Escreva uma função que recebe um ponteiro para float e atribui um valor lido do usuário.
+// Exercício 4.7: Escreva um programa que usa ponteiro para ponteiro (int **).
+// Exercício 4.8: Escreva uma função que recebe um ponteiro para char e conta o número de caracteres.
+// Exercício 4.9: Escreva um programa que usa ponteiros para acessar campos de uma struct.
+// Exercício 4.10: Escreva um programa que cria um vetor de ponteiros para inteiros e preenche com valores.
+
+// 5. LISTA LIGADA (EXTREMO)
+// Exercício 5.1: Implemente uma lista ligada simples de inteiros (inserção no início).
+// Exercício 5.2: Implemente uma função para remover um elemento da lista ligada.
+// Exercício 5.3: Implemente uma função para buscar um elemento na lista ligada.
+// Exercício 5.4: Implemente uma função para imprimir todos os elementos da lista ligada.
+// Exercício 5.5: Implemente uma função para liberar toda a memória da lista ligada.
+// Exercício 5.6: Implemente uma lista ligada de structs Aluno (nome, nota).
+// Exercício 5.7: Implemente uma função que retorna o tamanho da lista ligada.
+// Exercício 5.8: Implemente uma função que inverte a lista ligada.
+// Exercício 5.9: Implemente uma função que ordena a lista ligada.
+// Exercício 5.10: Implemente uma função que remove todos os elementos pares da lista ligada.
+
+// 6. ORDENAÇÃO (BUBBLE SORT) (DIFÍCIL)
+// Exercício 6.1: Implemente o algoritmo Bubble Sort para ordenar um vetor de inteiros.
+// Exercício 6.2: Implemente o Bubble Sort para ordenar um vetor de floats.
+// Exercício 6.3: Implemente o Bubble Sort para ordenar um vetor de strings.
+// Exercício 6.4: Implemente o Bubble Sort para ordenar um vetor de structs Aluno por nota.
+// Exerc��cio 6.5: Implemente o Bubble Sort para ordenar um vetor de structs Aluno por nome.
+// Exercício 6.6: Implemente uma função que conta o número de trocas feitas pelo Bubble Sort.
+// Exercício 6.7: Implemente uma função que verifica se o vetor está ordenado após o Bubble Sort.
+// Exercício 6.8: Implemente o Bubble Sort recursivo.
+// Exercício 6.9: Implemente o Bubble Sort para ordenar apenas os elementos pares de um vetor.
+// Exercício 6.10: Implemente o Bubble Sort para ordenar um vetor de inteiros em ordem decrescente.
+
+// Para cada exercício, escreva o código correspondente embaixo do comentário do enunciado.
+
+//======================================================================================================================
+// 1. ARQUIVOS (FÁCIL)
+// 1.1 Escreva um programa que crie um arquivo texto e grave a frase "Ola, Arquivos!".
+// 1.2 Leia um arquivo texto e imprima seu conteúdo na tela.
+// 1.3 Conte o número de linhas de um arquivo texto.
+
+/*
+#define MAX 50
+
+int main() {
+    FILE *arquivo = fopen("exercicio1_1.txt", "w");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir arquivo!\n");
+        return 1;
+    }
+    int linhas = 0;
+
+    fprintf(arquivo, "Ola, Arquivos!\n");
+
+    printf("Arquivo criado e gravado com sucesso!\n");
+    fclose(arquivo);
+
+    fopen("exercicio1_1.txt", "r");
+
+    printf("\nPrintando conteudo do arquivo:\n");
+
+    char texto[MAX];
+    while (fgets(texto, MAX, arquivo)) {
+        printf("%s", texto);
+        linhas++;
+    }
+    printf("\nNumero de linhas no arquivo: %d\n", linhas);
+
+    fclose(arquivo);
+    return 0;
+}
+*/
+
+
+// 1.4 Copie o conteúdo de um arquivo para outro.
+
+#define MAX 50
+
+int main() {
+    FILE *arquivo1 = fopen("Arquivos/exercicio1_4.txt", "w");
+    FILE *arquivo2 = fopen("Arquivos/exercicio1_4_copia.txt", "r");
+
+    if (arquivo1 == NULL || arquivo2 == NULL) {
+        printf("Erro ao abrir arquivo!\n");
+        return 1;
+    }
+    char texto[MAX];
+    printf("Digite o texto a ser copiado:\n");
+    fgets(texto, MAX, stdin);
+    fprintf(arquivo1, "%s", texto);
+    fclose(arquivo1);
+
+    arquivo1 = fopen("Arquivos/exercicio1_4.txt", "r");
+    if (arquivo1 == NULL) {
+        printf("Erro ao abrir arquivo original!\n");
+        return 1;
+    }
+
+    printf("\nConteudo do arquivo original:\n");
+    while (fgets(texto, MAX, arquivo1)) {
+        printf("%s", texto);
+        fputs(texto, arquivo2);
+    }
+
+    printf("\nConteudo do arquivo copiado:\n");
+    while (fgets(texto, MAX, arquivo2)) {
+        printf("%s", texto);
+    }
+
+    printf("\nArquivo copiado com sucesso!\n");
+    fclose(arquivo1);
+    fclose(arquivo2);
+
+    return 0;
+}
