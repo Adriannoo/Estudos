@@ -279,14 +279,55 @@ int main() {
 
 // 1.9 Escreva um programa que apague o conteúdo de um arquivo texto.
 
-#define MAX 50
+#define MAX 100
 
-FILE *arquivo;
+void apagar_arquivo() {
+    FILE *arquivo = fopen("Arquivos/exercicio1_9.txt", "w"); // Abre o arquivo em modo de escrita, o que apaga seu conteúdo
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para apagar!\n");
+        return;
+    }
+    fclose(arquivo); // Fecha o arquivo após apagar o conteúdo
+}
 
-
-void apagar_arquivo(){}
 
 int main() {
+    FILE *arquivo = fopen("Arquivos/exercicio1_9.txt", "a+"); // Abre o arquivo em modo de edicao e leitura
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+    char texto[MAX];
+    char resposta = '\0';
 
+    printf("Digite um texto para gravar no arquivo (maximo %d caracteres)\nDigite 'apagar' para limpar o arquivo\n", MAX - 1);
+    fgets(texto, MAX, stdin);
+
+    if (strcmp(texto, "apagar\n") == 0 || strcmp(texto, "APAGAR\n") == 0) { // Verifica se o texto digitado é "apagar"
+        fclose(arquivo); // Fecha o arquivo antes de apagar
+        apagar_arquivo(); // Chama a função para apagar o arquivo
+        printf("Conteudo do arquivo apagado com sucesso!\n");
+        return 1; // Encerra o programa após apagar o arquivo
+    }
+
+    fprintf(arquivo, "%s", texto); // Grava o texto no arquivo
+
+    printf("\nTexto gravado com sucesso!\nDeseja acrescentar mais texto? (s/n)\n");
+    scanf("%c", &resposta); // Lê a resposta do usuario
+    while (getchar() != '\n') {} // Limpa o buffer de entrada
+
+    if (resposta == 's' || resposta == 'S') {
+        printf("\nDigite mais texto para acrescentar ao arquivo: ");
+        fgets(texto, MAX, stdin);
+        fprintf(arquivo, "%s", texto); // Acrescenta o texto ao arquivo
+        printf("Texto acrescentado com sucesso!\n");
+    } else if (resposta == 'n' || resposta == 'N') {
+        printf("Saindo do programa...");
+    } else {
+        printf("ERRO, resposta inválida!\n");
+    }
+
+    fclose(arquivo); // Fecha o arquivo após a escrita
+    return 0;
 }
 
