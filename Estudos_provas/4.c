@@ -278,7 +278,7 @@ int main() {
 */
 
 // 1.9 Escreva um programa que apague o conteúdo de um arquivo texto.
-
+/*
 #define MAX 100
 
 void apagar_arquivo() {
@@ -330,4 +330,26 @@ int main() {
     fclose(arquivo); // Fecha o arquivo após a escrita
     return 0;
 }
+*/
 
+// 1.10 Escreva um programa que leia nomes de um arquivo e imprima apenas os que começam com 'A'.
+
+#define MAX 100
+
+int main() {
+    FILE *arquivo = fopen("Arquivos/exercicio1_10.txt", "a+"); // Abre o arquivo em modo de adição e leitura
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+
+    int contador = 0;
+
+    fprintf(arquivo, "%s", "Adriano Ramos\nJose da Silva\nArrombado da Desgraca\nLixo do Caralho\nAna Julia\nGiovana Kassime");
+
+    while ((contador = fgetc(arquivo) != EOF)) {
+
+    }
+
+    fclose(arquivo);
+}
