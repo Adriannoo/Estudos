@@ -393,5 +393,46 @@ int main() {
 #define MAX 3
 
 int main() {
-    
+    float **matriz = malloc(MAX * sizeof(float*)); // Aloca a matriz, onde cada linha e um ponteiro para float
+    if (matriz == NULL) {
+        printf("Erro ao alocar a memoria!\n");
+        return 1;
+    }
+
+    for (int i = 0; i < MAX; i++) { // Cria um loop para alocar cada linha da matriz
+        matriz[i] = malloc(MAX * sizeof(float));
+        if (matriz[i] == NULL) {
+            printf("Erro ao alocar a memoria!\n");
+            for (int j = 0; j < i; j++) {
+                free(matriz[j]); // Libera a memoria alocada para as linhas anteriores
+            }
+            free(matriz);
+            return 1;
+        }
+    }
+
+    printf("Digite os valores da matriz 3x3:\n");
+
+    for (int i = 0; i < MAX; i++) {
+        for (int j = 0; j < MAX; j++) {
+            printf("Digite a posicao [%d][%d]: ", i + 1, j + 1);
+            scanf("%f", &matriz[i][j]); // Lê os valores da matriz
+            while (getchar() != '\n') {}
+        }
+    }
+
+    printf("\nValores da matriz 3x3:\n");
+    for (int i = 0; i < MAX; i++) {
+        for (int j = 0; j < MAX; j++) {
+            printf("%.2f ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+    for (int i = 0; i < MAX; i++) { // Libera a memoria alocada para cada linha da matriz
+        free(matriz[i]);
+    }
+
+    free(matriz);
+    return 0;
 }
