@@ -333,23 +333,65 @@ int main() {
 */
 
 // 1.10 Escreva um programa que leia nomes de um arquivo e imprima apenas os que começam com 'A'.
-
+/*
 #define MAX 100
 
 int main() {
-    FILE *arquivo = fopen("Arquivos/exercicio1_10.txt", "a+"); // Abre o arquivo em modo de adição e leitura
+    FILE *arquivo = fopen("Arquivos/exercicio1_10.txt", "w+"); // Abre o arquivo em modo de adição e leitura
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
         return 1;
     }
 
-    int contador = 0;
+    char nome[MAX];
 
     fprintf(arquivo, "%s", "Adriano Ramos\nJose da Silva\nArrombado da Desgraca\nLixo do Caralho\nAna Julia\nGiovana Kassime");
+    rewind(arquivo);
 
-    while ((contador = fgetc(arquivo) != EOF)) {
-
+    printf("Nomes que comecam com A:\n");
+    while (fgets(nome, MAX, arquivo)) {
+        if (nome[0] == 'A' || nome[0] == 'a') {
+            printf("%s", nome);
+        }
     }
 
     fclose(arquivo);
+    return 0;
+}
+*/
+
+//======================================================================================================================
+// 2. ALOCAÇÃO DINÂMICA (FÁCIL)
+// 2.1 Alocar dinamicamente um vetor de 5 inteiros e ler seus valores.
+/*
+int main() {
+    int *vetor = malloc(5 * sizeof(int));
+
+    if (vetor == NULL) {
+        printf("Erro ao alocar memoria!\n");
+        return 1;
+    }
+
+    printf("Digite 5 numeros inteiros:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Numero %d: ", i + 1);
+        scanf("%d", &vetor[i]);
+        while (getchar() != '\n') {}
+    }
+
+    printf("\nValores digitados:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", vetor[i]);
+    }
+
+    free(vetor); // Libera a memoria alocada
+}
+*/
+
+// 2.2 Alocar dinamicamente uma matriz 3x3 de floats e preencher com valores do usuário.
+
+#define MAX 3
+
+int main() {
+    
 }
