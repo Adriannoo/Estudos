@@ -1,31 +1,3 @@
-/*
-1. Crie duas variáveis com números e mostre a soma entre elas.
-2. Subtraia dois números e exiba o resultado no console.
-3. Crie uma variável e incremente seu valor usando += .
-4. Divida dois números e imprima o resultado.
-5. Mostre o resto da divisão entre 10 e 3.
-6. Verifique se dois valores são iguais ( == ).
-7. Verifique se dois valores são estritamente iguais ( === ).
-8. Teste se um número é maior que outro.
-9. Teste se dois números são diferentes ( !== ).
-10. Crie uma expressão com && que retorne true .
-11. Crie uma expressão com || que retorne true .
-12. Inverta um valor booleano usando ! .
-13. Crie um array com 4 nomes e exiba o primeiro nome.
-14. Adicione um novo nome ao array e mostre o tamanho atualizado.
-15. Remova o último item do array e mostre o novo array.
-16. Crie uma variável com seu nome e idade, e use Template Strings para
-mostrar:
-Meu nome é João e tenho 20 anos.
-17. Crie uma variável com o preço de um produto e outra com a quantidade.
-Mostre o total.
-18. Faça um cálculo de média entre três notas e diga se o aluno passou (nota
->= 6).
-19. Verifique se a idade está entre 18 e 60 anos (inclusive).
-20. Escreva uma mensagem no console dizendo se um número é par ou ímpar
-usando % .
-*/
-
 // 1. Crie duas variáveis com números e mostre a soma entre elas.
 const num1 = 10, num2 = 20;
 const sum = num1 + num2;
