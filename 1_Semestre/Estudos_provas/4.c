@@ -390,6 +390,7 @@ int main() {
 
 // 2.2 Alocar dinamicamente uma matriz 3x3 de floats e preencher com valores do usuário.
 
+/*
 #define MAX 3
 
 int main() {
@@ -436,3 +437,120 @@ int main() {
     free(matriz);
     return 0;
 }
+*/
+
+
+//======================================================================================================================
+// 5. LISTA LIGADA (EXTREMO)
+// Exercício 5.1: Implemente uma lista ligada simples de inteiros (inserção no início).
+
+/*
+typedef struct inteiro {
+    int dados;
+    struct inteiro *prox;
+}inteiro;
+
+inteiro *novo_inteiro(inteiro *lista, const int numero) {
+    inteiro *novo_inteiro = malloc(sizeof(inteiro));
+    if (!novo_inteiro) {perror("Erro ao alocar memoria!"); return NULL;}
+
+    novo_inteiro->dados = numero;
+    novo_inteiro->prox = lista;
+
+    return novo_inteiro;
+}
+
+void liberar_lista(inteiro *lista) {
+    while (lista != NULL) {
+        inteiro *temp = lista;
+        lista = lista->prox;
+        free(temp);
+    }
+}
+
+int main() {
+    inteiro *lista = NULL;
+    const int inteiros[] = {42, 32, 12, 5};
+    printf("Lista ligada de inteiros: ");
+    for (int i = 0; i < sizeof(inteiros) / sizeof(inteiros[0]); i++) {
+        lista = novo_inteiro(lista, inteiros[i]);
+        printf("%d ", lista->dados);
+    }
+
+    liberar_lista(lista);
+    return 0;
+}
+*/
+
+// 5.2 Implemente uma funcao para remover um elemento da lista ligada
+
+#define MAX 50
+
+typedef struct nome {
+    char nome_pessoa[MAX];
+    struct nome *proximo;
+} nome;
+
+nome *nome_pessoa(nome* lista, char nome_max[MAX]) {
+    nome *novo_nome_pessoa = malloc(sizeof(nome));
+
+}
+
+int main() {
+    nome *lista = NULL;
+}
+
+//======================================================================================================================
+// 6. ORDENAÇÃO (BUBBLE SORT) (DIFÍCIL)
+// 6.1 Implemente o algoritmo Bubble Sort para ordenar um vetor de inteiros.
+
+/*
+int main() {
+    int inteiros[] = {1, 5, 2, 43, 6, 23, 92};
+    const int n = sizeof(inteiros) / sizeof(inteiros[0]); // Calcula o tamanho do vetor
+
+    printf("Vetor antes do Sort: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", inteiros[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (inteiros[j] > inteiros [j + 1]) { // Compara os elementos adjacentes
+                const int temp = inteiros[j];
+                inteiros[j] = inteiros[j + 1]; // Troca os elementos se estiverem na ordem errada
+                inteiros[j + 1] = temp; // Troca os elementos se estiverem na ordem errada
+            }
+        }
+    }
+
+    printf("\nVetor apos o Sort: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", inteiros[i]);
+    }
+    return 0;
+}
+*/
+
+// 6.2: Implemente o Bubble Sort para ordenar um vetor de floats.
+/*
+int main() {
+    float floats[] = {3.51, 41.23, 2.34, 63.2, 5.23};
+    const int size = sizeof(floats) / sizeof(float);
+
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (floats[j] > floats[j + 1]) {
+                const float temp = floats[j];
+                floats[j] = floats[j + 1];
+                floats[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < size; i++) {
+        printf("%.2f ", floats[i]);
+    }
+}
+*/
+
