@@ -1,10 +1,10 @@
 // 1. Função que calcula a área de um retângulo
 function calculate_rectangle_area(base, height) {
-    if (typeof base !== 'number' || typeof height !== 'number') {
+    if (typeof base !== 'number' || typeof height !== 'number') { 
         throw new Error('Both base and height must be numbers');
     }
 
-    if (base <= 0 || height <= 0) {
+    if (base <= 0 || height <= 0) { 
         throw new Error('Base and height must be positive numbers');
     }
 
