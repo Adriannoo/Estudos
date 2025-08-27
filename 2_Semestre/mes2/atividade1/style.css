@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: rgb(253, 249, 232);
+}
+
+h1 {
+    color: #3B4CCA;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input[id="input_pokemon"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin: 0 auto 12px auto;
+}
+
+ul[id="lista-pokemons"] {
+    list-style-type: none;
+    padding: 10px;
+    max-width: 200px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #B3A125;
+    margin-top: 20px;
+}
+
+button[id="button_adicionar"] {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #3B4CCA;
+    color: white;
+    border-radius: 6px;
+    border-right: 8px;
+    cursor: pointer;
+}
+
+button[id="button_remover"] {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #CC0000;
+    color: white;
+    border-radius: 6px;
+    border-right: 6px;
+    cursor: pointer;
+}
+
+div[id="container"] {
+    margin-top: 40px auto;
+    max-width: 400px;
+    background-color: #FFDE00;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 32px 24px;
+}
