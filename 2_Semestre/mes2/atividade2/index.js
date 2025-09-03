@@ -1,6 +1,6 @@
 const objeto_aluno = {
     nome: "Adriano",
-    idade: 19,
+    idade: 20,
     cidade: "Foz do Iguacu",
     curso: "ADS",
     ativo: true,
