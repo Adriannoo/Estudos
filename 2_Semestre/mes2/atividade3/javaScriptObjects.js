@@ -43,7 +43,7 @@ const pessoa = {
     apresentar: function() { return `Eu sou ${this.nome}, tenho ${this.idade} anos e matei todos os demônios!`; }
 }
 
-console.log(pessoa.apresentar());
+console.log(pessoa.apresentar()); 
 
 // Atividade 4 – Array de Objetos
 // Crie um array de objetos chamado alunos, com 3 objetos representando diferentes alunos (nome, idade, curso).
