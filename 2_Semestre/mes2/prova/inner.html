@@ -10,7 +10,7 @@
         <img src="https://imgs.search.brave.com/O6lmcFjC6CTFpN-YM7eXxg4rIgj8VdPtSH0OUCybeDw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9waWNm/aWxlcy5hbHBoYWNv/ZGVycy5jb20vMzkw/L3RodW1iLTE5MjAt/MzkwMDgzLnBuZw" alt="Red">
 
         <!-- Listas -->
-        <div id="Listas">
+        <div id="listas">
             <!-- Lista não Ordenada-->
             <ul>
                 <li>Lista não Ordenada</li>
@@ -43,7 +43,7 @@
                 </fieldset>
             </form>
         </div>
-        
+
         <!-- Tabela -->
         <table>
             <caption>Tabela de Nome, Idade e Cidade</caption>
@@ -80,6 +80,23 @@
             <p class="destaque">Parágrafo em destaque</p>
         </div>
 
+        <!-- Container Flexbox -->
+        <div class="container">
+            <div><h1>div 1</h1></div>
+            <div><h1>div 2</h1></div>
+            <div><h1>div 3</h1></div>
+        </div>
 
+        <!-- JSON e LocalStorage-->
+        <div>
+            <p id="pessoa"></p>
+            <ul id="lista-local"></ul>
+        </div>
+        <div id="btn-contador">
+            <h2>Contador: <span id="contador">0</span></h2>
+            <button onclick="incrementar_contador()">Acrescentar Visita</button>
+        </div>
+
+        <script src="index.js"></script>
     </body>
     </html>

@@ -1,0 +1,14 @@
+[
+    {
+        "nome": "Carro", 
+        "preco": 100000
+    },
+    {
+        "nome": "Computador",
+        "preco": 53
+    },
+    {
+        "nome": "Casa", 
+        "preco": 100000
+    }
+]
