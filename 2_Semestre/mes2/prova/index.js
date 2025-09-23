@@ -24,3 +24,8 @@ const lista_objeto = [
 lista_objeto.forEach(elements => {
     document.getElementById("lista").innerHTML += `<li>${elements.nome} - ${elements.preco}</li>`;
 });
+
+let visitas = localStorage.getItem("visitas");
+if (!visitas) visitas = 0;
+visitas = parseInt(visitas) + 1;
+localStorage.setItem("visitas", visitas);

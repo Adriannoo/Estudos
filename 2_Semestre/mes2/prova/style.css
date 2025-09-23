@@ -1,0 +1,20 @@
+body {
+    background-color: lightblue;
+    font-family: Arial, helvetica, sans-serif;
+}
+
+#formulario {
+    padding: 20px;
+    border-radius: 10px;
+    form {
+        padding: 10px;
+        background-color: lightgreen;
+        border-radius: 10px;
+        width: 300px;
+    }
+}
+
+.destaque {
+    color: red;
+    font-weight: bold;
+}
