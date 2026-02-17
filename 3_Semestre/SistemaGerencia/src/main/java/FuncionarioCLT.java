@@ -4,11 +4,15 @@ public class FuncionarioCLT extends Funcionario {
         super(nome, cpf, salarioBase);
     }
 
-    // Estou sobrescrevendo o metodo "pai" para calcular o salario do CLT
-    // Por isso da utilizacao da anotacao "@override" para indicar que estou sobrescrevendo um metodo da classe pai
-    // Criando uma nova implementacao
+    // Utilizacao da anotacao "@override" para indicar que estou sobrescrevendo um metodo da classe pai
+    // Criando uma nova implementacao.
     @Override
     public double calcularSalario() {
         return getSalarioBase();
+    }
+
+    @Override
+    public String getCargo() {
+        return "Funcionario CLT";
     }
 }

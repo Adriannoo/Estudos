@@ -35,7 +35,7 @@ public abstract class Funcionario {
         if (salarioBase < 0) {
             // Do pacote .lang, lanca uma excecao para indicar que o salario base nao pode ser negativo
             // Ille joga o erro na tela, parando a execucao do programa
-            // "throw" - lança o erro; "IlleArgExc" - Argumento inválido
+            // "throw" - lanca o erro; "IlleArgExc" - Argumento invalido
             throw new IllegalArgumentException("ERRO! Salário base não pode ser negativo!");
         }
         this.salarioBase = salarioBase;
@@ -55,9 +55,20 @@ public abstract class Funcionario {
         salarioBase += salarioBase * (percentual / 100);
     }
 
+    // Funcao que retorna a "classe", e simpleName retorna apenas o nome da classe
+    public String getCargo() {
+        return this.getClass().getSimpleName();
+    }
+
     public void exibirDados() {
         System.out.print("-----------------------------\n");
-        System.out.printf("Nome: %s\nCPF: %s\nSalario Base: R$ %.2f\n Salario Final: R$ %.2f\n", nome, cpf, salarioBase, calcularSalario());
+        System.out.printf("Nome: %s\nCPF: %s\nSalario Base: R$ %.2f\nSalario Final: R$ %.2f\n", nome, cpf, salarioBase, calcularSalario());
+        System.out.print("-----------------------------\n");
+    }
+
+    public void exibirDadosSimplificados() {
+        System.out.print("\n-----------------------------\n");
+        System.out.printf("Nome: %s\nSalario Final: R$ %.2f\n", nome, calcularSalario());
         System.out.print("-----------------------------\n");
     }
 }
