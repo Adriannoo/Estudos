@@ -1,4 +1,4 @@
-public enum Enum {
+public enum TipoPagamentoEnum {
     PIX,
     CARTAO,
     BOLETO

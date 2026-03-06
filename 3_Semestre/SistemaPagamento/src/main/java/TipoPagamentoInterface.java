@@ -1,3 +1,3 @@
-public interface Interface {
+public interface TipoPagamentoInterface {
     void processarPagamento(double valor);
 }

@@ -1,11 +1,7 @@
-
-public class PagamentoCartao implements Interface {
-
-    double valorCartao;
-    Enum tipoPagamento = Enum.CARTAO;
+public class PagamentoCartao implements TipoPagamentoInterface {
 
     @Override
     public void processarPagamento(double valor) {
-
+        System.out.println("Pagamento por Cartao no valor de: " + valor);
    }
 }
