@@ -1,5 +1,8 @@
 package com.example.demo.repository;
 
-public class CarroRepository extends JpaRepository<Carro, Long> {
+import com.example.demo.entity.EntityCarro;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CarroRepository extends JpaRepository <EntityCarro, Long> {
 
 }
