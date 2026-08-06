@@ -4,15 +4,12 @@ import com.uniamerica.aula.semana2.controller.carro.dto.CarroRequest;
 import com.uniamerica.aula.semana2.controller.carro.dto.CarroResponse;
 import com.uniamerica.aula.semana2.entity.Carro;
 import com.uniamerica.aula.semana2.service.CarroService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,6 +31,7 @@ public class CarroController {
         }
     }
 
+    //GET LOCALHOST:8080/API/CARROS/1
     @GetMapping("/{id}")
     public  ResponseEntity<CarroResponse> buscarPorId (@PathVariable Long id){
 
@@ -44,6 +42,17 @@ public class CarroController {
             throw responseStatusException;
         }
         catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //GET LOCALHOST:8080/API/CARROS/MARCA/talmarca
+    @GetMapping("/marca/{marca}")
+    public ResponseEntity<CarroResponse> buscarPorMarca (@PathVariable String marca) {
+        try {
+            Carro carro = this.carroService.buscarPorMarca(marca);
+            return new ResponseEntity<CarroResponse>(CarroResponse.de(carro), HttpStatus.CREATED);
+        } catch (Exception e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }

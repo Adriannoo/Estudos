@@ -28,7 +28,6 @@ public class CarroService {
         return this.carroRepository.save(carro);
     }
 
-
     public Carro atualizar(Long id, CarroRequest carroRequest){
         Carro carro = this.buscarPorId(id);
 
@@ -60,10 +59,16 @@ public class CarroService {
                         "Carro não encontrado com id "+ id));
     }
 
+    public Carro buscarPorMarca(String marca) {
+        return this.carroRepository.findByMarca(marca).
+                stream().findAny().orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Carro não encontrado com marca "+ marca));
+    }
+
     public ArrayList<Carro> listar(){
         return (ArrayList<Carro>) this.carroRepository.findAll();
     }
-
 
     public Carro deletarPorId(Long id){
         Carro carro = this.buscarPorId(id);
