@@ -1,0 +1,6 @@
+Assim, concluímos que sempre temos que ter em mente os estados possíveis de qualquer promessa em JavaScript:
+
+Promessas podem ser concluídas de duas formas: fulfilled (realizada, completa) ou rejected (rejeitada). Isso equivale a duas situações possíveis: a promessa se concretizou (retornou os dados ou executou o código que deveria) ou não.
+Promessas que não estão fulfilled nem rejected estão pending (pendentes), ou seja, ainda não é possível saber o resultado final porque o processamento ainda não foi concluído.
+Após a finalização do processamento, a promessa passa para o estado de settled (concluída), independente do resultado.
+Uma vez que a promessa está settled seu resultado não se altera mais, ou seja, uma promessa que se concluiu como rejected não muda mais para o estado de fulfilled e vice-versa.

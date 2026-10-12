@@ -1,0 +1,22 @@
+{
+  "name": "NLW-Node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Adriannoo/NLW-Node.git",
+  "author": "Adriano Ramos dos Santos Junior <77934740+Adriannoo@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev src/server.ts",
+    "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.32"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.4"
+  }
+}

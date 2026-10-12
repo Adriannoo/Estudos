@@ -1,0 +1,1 @@
+game_font = pygame.font.Font('04B_19.ttf',40)

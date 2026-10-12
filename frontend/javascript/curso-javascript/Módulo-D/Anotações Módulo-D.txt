@@ -1,0 +1,5 @@
+Condições:
+if, else
+
+Condição Múltipla:
+switch, 'Break obrigatório!'

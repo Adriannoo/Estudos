@@ -51,6 +51,28 @@ Module.symvers
 Mkfile.old
 dkms.conf
 .idea
-1_Semestre/pilha
-1_Semestre/4
-/3_Semestre/aulaView/target/
+/atividade semestres/1_Semestre/pilha
+/atividade semestres/1_Semestre/4
+/atividade semestres/3_Semestre/aulaView/target/
+
+# Dependências, caches e arquivos gerados dos estudos
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.angular/
+target/
+dist/
+build/
+out/
+.vscode/
+*.iml
+*.class
+.DS_Store
+Thumbs.db
+__MACOSX/

@@ -1,0 +1,49 @@
+UTF-8 // Anotação
+
+EXEMPLO CSS:
+
+//h1 é o seletor.
+h1{
+    font-family: arial; //tudo isso é uma declaração.
+    font-size: 12px;
+    color: blue;
+} //color é uma propriedade e blue um valor.
+——————————————————————————————————————————————————————————————————————————
+Armazenamento: MegaByte(MB), GigaByte(GB)
+Transmissão: Megabit(Mb), Gigabit(Gb)
+Dados são transmitidos em frequências de 0 e 1, _— por exemplo.
+
+HTML - Linguagem focada em conteúdo 
+CSS - Atrativos visuais, fóco em design
+JavaScript - Uma linguagem de programação. Linguagem focada em interação.
+——————————————————————————————————————————————————————————————————————————
+Para criar link de CSS e JavaScript
+
+CSS: <link rel="stylesheet" href="style.css">
+JavaScript: <script src="script.js"></script>
+——————————————————————————————————————————————————————————————————————————
+hr - para criar uma linha horizontal
+&#x - para adicionar emojis!
+® - &reg;
+© - &copy;
+™ - &trade;
+€ - &euro;
+£ - &pound;
+¥ - &yen;
+¢ - &cent;
+Δ - &Delta;
+↑ - &uarr; - up arrow
+——————————————————————————————————————————————————————————————————————————
+para adicionar um Favicon:
+link:favicon
+——————————————————————————————————————————————————————————————————————————
+dt = Termo
+dd = Descrição
+——————————————————————————————————————————————————————————————————————————
+DESCRIÇÃO DAS AULAS
+
+ex002 - PARÁGRAFOS, QUEBRA DE LINHAS E SÍMBOLOS.
+ex003 - IMAGENS NO SITE.
+ex004 - ADICIONANDO FAVICON.
+ex005 - HIERARQUIA DE TÍTULOS
+ex006 - FORMATAÇÕES - NEGRITO E ITÁLICO * Semântica, que tem significado.

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>primeiros passos com DOM</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+            font: normal 15pt candara light;
+        }
+    </style>
+</head>
+<body>
+    <h1>iniciando estudos com DOM</h1>
+    <p>Aqui vai o resultado</p>
+    <p>Aprendendo a usar o <strong>DOM</strong> em JavaScript.</p>
+    <div id='msg'>Clique em mim</div>
+    <script>
+        let corpo = document.body
+        let p1 = document.getElementsByTagName('p')[1]
+        let d = document.querySelector('div#msg')
+        
+        d.style.background = 'white'
+        d.style.color = 'black'
+
+        /*
+        corpo.style.background = 'white'
+        p1.style.color = 'purple'
+        corpo.style.color = 'purple'
+
+        document.write(p1.innerHTML)
+
+        Por Tag Name:
+        let d = document.getElementsByTagName('msg')[0]
+        d.innerText = 'Oi'
+
+        Por Id:
+        let d = document.getElementById('msg') 
+        d.style.background = 'grey'
+
+        Por Nome:
+        let d = document.getElementsByName('msg')[0]
+        d.innerText = 'Ows'
+
+        Por classe:
+        let d = document.getElementsByClassName('msg')[0]
+        d.innerText = 'Oi'
+        */
+    </script>
+</body>
+</html>

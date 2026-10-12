@@ -1,0 +1,5 @@
+print('============Exercício 5============')
+n: int = int(input('Escreva um número inteiro, que eu irei mostra seu sucessor e seu antecessor. = '))
+print('Antecessor = {}'.format(n - 1)), print('Número = {}'.format(n)), print('Sucessor = {}'.format(n + 1))
+n = int(input('Digite um número = '))
+print('Analisando o número {}; \no seu sucessor é {}; \ne seu antecessor é {}.'.format(n, (n + 1), (n - 1)))

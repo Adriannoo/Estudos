@@ -1,0 +1,78 @@
+COmando type(2) <class 'int'> mostra o tipo primitivo de cada coisa!
+
+Glossário
+
+resolução de problemas:
+O processo de formular um problema, encontrar uma solução e expressá-la.
+
+linguagem de alto nível:
+Uma linguagem de programação como Python, que foi criada com o intuito
+de ser fácil para os humanos escreverem e lerem.
+
+linguagem de baixo nível:
+Uma linguagem de programação criada para o computador executar com
+facilidade; também chamada de “linguagem de máquina” ou “linguagem
+assembly”.
+
+portabilidade:
+A propriedade de um programa de poder ser executado em mais de um tipo
+de computador.
+
+interpretador:
+Um programa que lê outro programa e o executa.
+
+prompt:
+Caracteres expostos pelo interpretador para indicar que está pronto para
+receber entradas do usuário.
+
+programa:
+Conjunto de instruções que especificam uma operação de computação.
+
+instrução print:
+Uma instrução que faz o interpretador do Python exibir um valor na tela.
+
+operador:
+Um símbolo especial que representa uma operação de computação simples
+como adição, multiplicação ou concatenação de strings.
+
+valor:
+Uma das unidades básicas de dados, como um número ou string, que um
+programa manipula.
+
+tipo:
+Uma categoria de valores. Os tipos que vimos por enquanto são números
+inteiros (tipo int), números de ponto flutuante (tipo float) e strings (tipo str).
+
+inteiro:
+Um tipo que representa números inteiros.
+
+ponto flutuante:
+Um tipo que representa números com partes fracionárias.
+
+string:
+Um tipo que representa sequências de caracteres.
+
+linguagem natural:
+Qualquer linguagem que as pessoas falam e que se desenvolveu
+naturalmente.
+
+linguagem formal:
+Qualquer linguagem que as pessoas criaram com objetivos específicos,
+como representar ideias matemáticas ou programas de computador; todas as
+linguagens de programação são linguagens formais.
+
+símbolo:
+Um dos elementos básicos da estrutura sintática de um programa, análogo a
+uma palavra em linguagem natural.
+
+sintaxe:
+As regras que governam a estrutura de um programa.
+
+análise:
+Examinar um programa e sua estrutura sintática.
+
+bug:
+Um erro em um programa.
+
+depuração:
+O processo de encontrar e corrigir (depurar) bugs.

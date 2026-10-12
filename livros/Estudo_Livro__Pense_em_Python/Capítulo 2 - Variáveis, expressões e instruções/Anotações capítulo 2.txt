@@ -1,0 +1,68 @@
+Glossário
+
+variável:
+Um nome que se refere a um valor.
+
+atribuição:
+Uma instrução que atribui um valor a uma variável.
+
+diagrama de estado:
+Uma representação gráfica de um grupo de variáveis e os valores a que se
+referem.
+
+palavra-chave:
+Uma palavra reservada, usada para analisar um programa; não é possível
+usar palavras-chave como if, def e while como nomes de variáveis.
+
+operando:
+Um dos valores que um operador produz.
+
+expressão:
+Uma combinação de variáveis, operadores e valores que representa um
+resultado único.
+
+avaliar:
+Simplificar uma expressão executando as operações para produzir um valor
+único.
+
+instrução:
+Uma seção do código que representa um comando ou ação. Por enquanto,
+as instruções que vimos são instruções de atribuições e de exibição.
+
+executar:
+Executar uma instrução para fazer o que ela diz.
+
+modo interativo:
+Um modo de usar o interpretador do Python, digitando o código no prompt.
+
+modo script:
+Um modo de usar o interpretador do Python para ler código em um script e
+executá-lo.
+
+script:
+Um programa armazenado em um arquivo.
+
+ordem das operações:
+As regras que governam a ordem na qual as expressões que envolvem
+vários operadores e operandos são avaliadas.
+
+concatenar:
+Juntar dois operandos pelas extremidades.
+
+comentários:
+Informações em um programa destinadas a outros programadores (ou
+qualquer pessoa que leia o texto fonte) que não têm efeito sobre a execução
+do programa.
+
+erro de sintaxe:
+Um erro em um programa que torna sua análise impossível (e por isso
+impossível de interpretar).
+
+exceção:
+Um erro que se descobre quando o programa é executado.
+semântica:
+O significado de um programa.
+
+erro semântico:
+Um erro que faz com que um programa faça algo diferente do que o
+programador pretendia.

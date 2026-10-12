@@ -1,0 +1,26 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+/.idea
+
+# Ignorar arquivos de log
+*.log
+# Ignorar arquivos de compilação
+/build/
+# Ignorar arquivos de configuração do sistema operacional
+.DS_Store
+# Ignorar arquivos de configuração do editor
+.vscode/
+../.idea/
+# Ignorar arquivos de dependências
+node_modules/
+.idea
+
+*.exe
+*.dat

@@ -1,0 +1,18 @@
+Normalmente para cada site existem 3 tecnologias fundamentais:
+* HTML: O 'jornalista', responsável pelo conteúdo;
+* CSS: O 'designer', Responsável por cuidar do estilo e design;
+* JavaScript: A parte do programador, responsável pelas interações.
+———————————————————————————————————————————————————————————————————————————————————————————
+Essas 3 tecnologias funcionam em conjunto! 
+E são essas 3 que compõem a parte de cliente da grande maioria dos sites de hoje em dia! 
+
+# Importante lembrar:
+ - HTML e CSS NÃO são linguagem de programação, são tecnologias de construção de sites;
+ - Já o JavaScript sim, é uma linguagem de programação.
+ - Tentar ler bastante!
+———————————————————————————————————————————————————————————————————————————————————————————
+# O QUE EU APRENDI NESSE MÓDULO-A:
+ - Sei pra que serve o Node.js: Que é um software de código aberto que executa JavaScript!;
+ - Diferenças entre HTML, CSS e JavaScript;
+ - Disparar alertas, confirmações e perguntas.
+———————————————————————————————————————————————————————————————————————————————————————————

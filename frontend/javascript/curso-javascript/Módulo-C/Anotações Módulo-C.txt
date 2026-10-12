@@ -1,0 +1,28 @@
+DOM = Document Object Model
+Vertente web do JavaScript.
+—————————————————————————————————————————————————————————————————————
+Selecionando elementos árvore DOM:
+por Marca ou Tag Name:
+ getElementsByTagName()
+
+por ID:
+ getElementById()
+
+por Nome:
+ getElementsByName()
+
+por Classe:
+ getElementsByClassName()
+
+por Seletor:
+ querySelector()
+ querySelectorAll()
+
+Id = #
+Class = .
+—————————————————————————————————————————————————————————————————————
+Eventos Dom:
+tudo aquilo que pode acontecer, exemplo: um mouse entrando em uma div.
+mouseup, mousedown, mouseenter, mouseout, mouseclick.
+—————————————————————————————————————————————————————————————————————
+Função em JavaScript é um conjunto de linhas que vão ser executadas só quando o evento ocorrer.

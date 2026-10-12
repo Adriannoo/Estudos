@@ -1,0 +1,3 @@
+# Python para Análise de Dados
+## De que se trata este livro?
+Este livro diz respeito aos detalhes sobre manipulação, processamento, limpeza e extração de informações de dados em Python. Meu objetivo é oferecer um guia para as partes da linguagem de programação Python e o seu ecossistema de bibliotecas orientadas a dados e ferramentas que deixarão você equipado para se tornar um analista de dados eficaz. Embora “análise de dados” esteja no título do livro, o foco está especificamente na programação, nas bibliotecas e nas ferramentas Python, em oposição à metodologia de análise de dados. É a programação Python necessária para a análise de dados.

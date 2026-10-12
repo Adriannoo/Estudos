@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro programa JavaScript</title>
+    <style>
+        body { /* Comentário em CSS */
+            background-color: rgb(61, 61, 61);
+            color: white;
+            font: normal 20pt arial;
+        }
+        h1 {
+            color: rgb(0, 0, 0)
+        }
+    </style>
+</head>
+<body> <!-- Isso é um comentário em HTML -->
+    <h1>Olá, mundo!</h1>
+    <p>Já me livrei da maldição!</p>
+    <script>        
+        let n1 = Number(window.prompt('Digite um número: ')) // String
+        let n2 = Number(window.prompt('Digite outro número: ')) // String
+
+        let soma = n1 + n2
+
+        alert(`A soma dos valores é de ${soma}`) // Formatando com ${} e usando crase
+        // (number + number) para adição
+        // (string + string) para concatenação
+    </script>
+</body>
+</html>
