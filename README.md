@@ -1,47 +1,75 @@
 # Estudos de programação
 
-Reúne exercícios, anotações de livros, cursos e atividades acadêmicas de Adriano Ramos. O conteúdo registra aprendizado e prática; os projetos têm diferentes níveis de conclusão.
+Exercícios, cursos, livros e atividades acadêmicas de **Adriano Ramos**. Este repositório registra a evolução do aprendizado em programação, desenvolvimento web e persistência de dados.
 
-## Índice
+O conteúdo é material de estudo, com diferentes níveis de conclusão. Projetos de portfólio são mantidos em repositórios próprios.
 
-| Área | Conteúdo |
+## Explore por área
+
+| Área | O que você encontra |
 | --- | --- |
-| [Atividades por semestre](atividade%20semestres/) | Conteúdo original de `1_Semestre` a `4_Semestre`: C, JavaScript, Java, persistência e Spring. |
-| [Git e GitHub](fundamentos/git-github/1o/) | Primeiro repositório de curso, com um site de exemplo. |
-| [HTML e CSS](frontend/html-css/) | `Curso_HTML5_CSS3` e `projeto-site`. |
-| [JavaScript no navegador](frontend/javascript/curso-javascript/) | Aulas e exercícios organizados por módulo. |
-| [React](frontend/react/React/) | Repositório de referência ainda sem implementação. |
-| [Fundamentos e objetos em JavaScript](linguagens/javascript/) | `alura-backend` e `javascript-POO`. |
-| [Python](linguagens/python/Curso-Python/) | Aulas, exercícios e pequenos jogos. |
-| [Livros](livros/) | Pense em Python, JavaScript: O Guia Definitivo e Python para Análise de Dados. As pastas preservam os nomes das origens. |
-| [Node.js](backend/nodejs/) | `NLW-Node` e `biblioteca-js-node`, com configurações próprias. |
-| [Projetos práticos](projetos-praticos/) | `curso-alura`, `praticando-logica` e `Discover`. |
-| [Trabalhos acadêmicos](academico/ADS-FACULDADE/) | Material de `ADS-FACULDADE`, com organização original por semestre. |
+| [Atividades por semestre](atividade%20semestres/) | Atividades do 1º ao 4º semestre: C, desenvolvimento web, Java e Spring. |
+| [Fundamentos](fundamentos/) | Primeiros exercícios de Git e GitHub. |
+| [Frontend](frontend/) | HTML, CSS e JavaScript no navegador; referência de React ainda sem implementação. |
+| [Linguagens](linguagens/) | Fundamentos de JavaScript, orientação a objetos e Python. |
+| [Backend](backend/) | Exercícios com Node.js, TypeScript e bibliotecas de linha de comando. |
+| [Livros](livros/) | Práticas de Pense em Python, JavaScript: O Guia Definitivo e Python para Análise de Dados. |
+| [Projetos práticos](projetos-praticos/) | Exercícios de lógica, cursos Alura e Discover. |
+| [Material acadêmico complementar](academico/) | Atividades incorporadas de ADS-FACULDADE, com a organização de origem preservada. |
+
+## Explore por semestre
+
+| Semestre | Principais temas |
+| --- | --- |
+| [1º semestre](atividade%20semestres/1_Semestre/) | Fundamentos em C, alocação dinâmica, arquivos e pilhas. |
+| [2º semestre](atividade%20semestres/2_Semestre/) | Atividades organizadas do primeiro ao quarto mês. |
+| [3º semestre](atividade%20semestres/3_Semestre/) | Java, orientação a objetos, Swing, pagamentos e JPA. |
+| [4º semestre](atividade%20semestres/4_Semestre/) | Spring, CRUD, biblioteca, testes unitários e integração entre frontend/backend. |
+
+## Como usar
+
+Não há instalação, aplicação ou comando de teste único para todo o repositório. Escolha uma área, abra o exercício e consulte o README, o enunciado ou a configuração daquela pasta.
+
+| Tecnologia | Onde começar |
+| --- | --- |
+| HTML/CSS/JavaScript | Abra o HTML de entrada. Exercícios com requisições ou módulos podem precisar de servidor local. |
+| Node.js/TypeScript | Confira o `package.json`, a versão necessária e os scripts disponíveis antes de instalar dependências. |
+| Python | Execute o arquivo do exercício com a versão e as dependências exigidas por ele. |
+| Java/Maven/Spring | Confira o `pom.xml`, os wrappers e a configuração de banco do projeto escolhido. |
+| C | Confira os fontes e o `CMakeLists.txt`, quando disponível, para compilar o exercício. |
+
+Alguns materiais são antigos ou incompletos. A pasta de React contém somente documentação e licença; não representa uma aplicação pronta. Dependências e configurações variam entre exercícios e não foram atualizadas em conjunto.
 
 ## Organização
 
-Cada curso, livro ou projeto mantém sua estrutura interna, seus arquivos de configuração e as referências existentes. Os quatro semestres que já estavam neste repositório ficam em `atividade semestres/`.
+```text
+Estudos/
+├── atividade semestres/     # 1_Semestre a 4_Semestre
+├── fundamentos/             # Git e GitHub
+├── frontend/                # HTML, CSS, JavaScript e referência de React
+├── linguagens/              # JavaScript e Python
+├── backend/                 # Node.js e TypeScript
+├── livros/                  # Exercícios de leitura
+├── projetos-praticos/       # Cursos e desafios
+└── academico/               # Material complementar da faculdade
+```
 
-O material de `ADS-FACULDADE` foi incorporado separadamente. Sua cópia de PokeCompanion foi preservada; conteúdos acadêmicos semelhantes ainda precisam ser comparados antes de qualquer remoção.
+Cada área possui um índice. As estruturas internas, os enunciados, os nomes de origem e as referências dos cursos e livros foram preservados.
 
-## Execução
+O PokeCompanion antigo foi retirado desta coleção. A versão de portfólio fica em seu repositório dedicado. Bere, Flappy Bird e Snake Game também permanecem fora de Estudos.
 
-Não há uma instalação ou comando único para todo o repositório. Abra a pasta do exercício ou projeto e consulte seu README e sua configuração.
+## Histórico da coleção
 
-- HTML/CSS/JavaScript: consulte o arquivo HTML de entrada e os requisitos do exercício. Exemplos com requisições podem precisar de um servidor local.
-- Node.js: consulte o `package.json` da pasta correspondente para dependências e scripts.
-- Python: execute o arquivo do exercício com a versão e as dependências exigidas por ele.
-- Java/Maven e Spring: consulte o `pom.xml`, os wrappers e a configuração de banco de cada projeto.
-- C: consulte os fontes e eventuais arquivos de configuração de compilação do exercício.
+Foram reunidos conteúdos locais de `1o`, `Curso_HTML5_CSS3`, `projeto-site`, `curso-javascript`, `React`, `alura-backend`, `javascript-POO`, `Curso-Python`, `Estudo_Livro__Pense_em_Python`, `Estudo_Livro_JavaScript_O_guia_definitivo`, `Python-para-Analide-de-Dados`, `NLW-Node`, `biblioteca-js-node`, `curso-alura`, `praticando-logica`, `Discover` e `ADS-FACULDADE`.
 
-A consolidação foi verificada por comparação SHA-256 dos arquivos copiados e dos semestres movimentados. As aplicações não foram executadas e as dependências não foram instaladas nesta etapa.
+A consolidação reuniu os arquivos de trabalho; os históricos Git dos repositórios de origem não foram importados. Os metadados Git e dependências instaladas das origens não fazem parte dessa incorporação.
 
-## Origens e histórico
+## Conferência desta organização
 
-Foram incorporados os conteúdos locais de `1o`, `Curso_HTML5_CSS3`, `projeto-site`, `curso-javascript`, `React`, `alura-backend`, `javascript-POO`, `Curso-Python`, `Estudo_Livro__Pense_em_Python`, `Estudo_Livro_JavaScript_O_guia_definitivo`, `Python-para-Analide-de-Dados`, `NLW-Node`, `biblioteca-js-node`, `curso-alura`, `praticando-logica`, `Discover` e `ADS-FACULDADE`.
+Os links dos índices foram conferidos, o ZIP de fontes duplicado foi retirado e a configuração pessoal versionada do VS Code foi removida. Os exercícios preservados foram comparados por SHA-256 antes e depois da finalização.
 
-Os repositórios originais foram preservados. Seus históricos Git não foram importados: esta organização reúne cópias do conteúdo local. Metadados Git, dependências instaladas, caches, saídas de compilação e configurações pessoais de IDE não foram incorporados nas novas pastas.
+Essa conferência valida a organização e a preservação dos arquivos. Não significa que todos os exercícios foram executados ou que todas as dependências estão atuais.
 
 ## Créditos e licenças
 
-Os créditos, materiais de cursos e livros e arquivos de licença foram preservados nas pastas de origem incorporadas. Consulte as referências e licenças de cada material; a licença da raiz não substitui automaticamente as condições dos conteúdos de terceiros.
+Os materiais, referências, créditos e licenças de cursos, livros e projetos incorporados permanecem em suas pastas. Consulte os arquivos de cada conteúdo; a licença MIT da raiz não substitui automaticamente as condições de materiais de terceiros.
